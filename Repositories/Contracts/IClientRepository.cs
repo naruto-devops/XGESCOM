@@ -5,12 +5,14 @@ using System.Text;
 
 namespace Repositories.Contracts
 {
-   public  interface IClientRepository
+    public interface IClientRepository
     {
-         List<Client> GetAll();
+        List<Client> GetAll();
         Client GetById(int id);
-        void Add(Client clt);
-        void Update(string id);
-        void Delete(string id);
+        Client Add(Client client);
+        Client Update(Client client);
+        Client GetByDocLig(int id);
+        bool Delete(int id);
+        FamilleTier GetFamilleTier(int id);
     }
 }

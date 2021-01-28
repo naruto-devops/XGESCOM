@@ -2,57 +2,79 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Models;
 using Repositories.Contracts;
+using Services.Contracts;
 
 namespace XSOFT_WEB.Controllers
 {
     [Route("api/[controller]")]
+   // [EnableCors("AllowOrigin")]
     [ApiController]
     public class ClientController : ControllerBase
     {
-        IClientRepository _clientRepository;
+        IClientService _clientService;
+     
+       
 
-        public ClientController(IClientRepository clt)
+
+        public ClientController(IClientService client)
         {
-            _clientRepository = clt;
+            _clientService = client;
+          
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Client> GetAll()
         {
-            return _clientRepository.GetAll();
+         
 
+
+
+            return _clientService.GetAll();
         }
-        [HttpGet("{cbmarq}")]
+        [HttpGet("Find/{id}")]
         public Client GetById(int id)
         {
-            return _clientRepository.GetById(id);
+            return _clientService.GetById(id);
 
         }
-        [HttpPost]
-        public void Post([FromBody]Client clt)
+        [HttpPost("Create")]
+        public Client Post([FromBody]Client client)
         {
             if (ModelState.IsValid)
-                _clientRepository.Add(clt);
-
-        }
-        [HttpPut("{id}")]
-       // public void Put(string id, [FromBody]Client clt)
-        public void Put(string id, [FromBody]Client clt)
-        {
-            clt.CT_Num = id;
-
-            if (ModelState.IsValid)
-                _clientRepository.Update(id);
-
-        }
-        [HttpDelete("{id}")]
-        public void Delete(string id)
-        {
+                _clientService.Add(client);
+            return client;
            
-                _clientRepository.Delete(id);
+
+        }
+        [HttpPut("Edit")]
+        public Client Put( [FromBody]Client client)
+        {
+
+
+            if (ModelState.IsValid)
+                _clientService.Update(client);
+            return client;
+
+        }
+        [HttpDelete("Delete/{id}")]
+        public bool Delete(int id)
+        {
+            bool res = false;
+
+            if (_clientService.CheckClient_ExistDocLig(id) == false)
+            {
+                _clientService.Delete(id);
+                res = true;
+
+            }
+
+            return res;
+            
+           
 
         }
 

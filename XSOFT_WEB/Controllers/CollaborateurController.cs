@@ -20,19 +20,19 @@ namespace XSOFT_WEB.Controllers
         {
             _collaborateurService = collaborateurService;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Collaborateur> GetAll()
         {
             return _collaborateurService.GetAll();
 
         }
-        [HttpGet("{Numero}")]
+        [HttpGet("Find/{id}")]
         public Collaborateur GetById(int id)
         {
             return _collaborateurService.GetById(id);
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public Collaborateur Post([FromBody]Collaborateur collaborateur)
         {
             if (ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace XSOFT_WEB.Controllers
             return collaborateur;
 
         }
-        [HttpPut]
+        [HttpPut("Edit")]
         public Collaborateur Put([FromBody]Collaborateur collaborateur)
         {
 
@@ -50,7 +50,7 @@ namespace XSOFT_WEB.Controllers
             return collaborateur;
 
         }
-        [HttpDelete("{numero}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
             bool res = false;

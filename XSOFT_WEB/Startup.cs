@@ -33,7 +33,15 @@ namespace XSOFT_WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors(o => o.AddPolicy("MyAllowSpecificOrigins", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithOrigins("*");
+            }));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc()
              .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
@@ -51,6 +59,7 @@ namespace XSOFT_WEB
             services.AddScoped<ICollaborateurRepository, CollaborateurRepository>();
             services.AddScoped<IModalitePaiementRepository, ModalitePaiementRepository>();
             services.AddScoped<IIncotermRepository, IncotermRepository>();
+            services.AddScoped<IParametresRepository, ParametresRepository>();
             #endregion
 
             #region services
@@ -60,14 +69,25 @@ namespace XSOFT_WEB
             services.AddScoped<ICategorieTarifService, CategorieTarifServices>();
             services.AddScoped<IModalitePaiementService, ModalitePaiementServices>();
             services.AddScoped<IIncotermService, IncotermServices>();
-
+            
+            services.AddScoped<IClientService, ClientServices>();
+            
+            services.AddScoped<IParametresService, ParametresServices>();
             #endregion
+
+
+            //services.AddCors(allowsites =>
+            //{
+            //    allowsites.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            //});
+
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("MyAllowSpecificOrigins");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -92,6 +112,7 @@ namespace XSOFT_WEB
 
             app.UseHttpsRedirection();
             app.UseMvc();
+           
         }
     }
 }

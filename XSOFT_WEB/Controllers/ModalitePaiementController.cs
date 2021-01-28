@@ -20,19 +20,19 @@ namespace XSOFT_WEB.Controllers
         {
             _ModalitePaiementService = mdt;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<ModalitePaiement> GetAll()
         {
             return _ModalitePaiementService.GetAll();
 
         }
-        [HttpGet("{Numero}")]
+        [HttpGet("Find/{id}")]
         public ModalitePaiement GetById(int id)
         {
             return _ModalitePaiementService.GetById(id);
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public ModalitePaiement Post([FromBody]ModalitePaiement mdt)
         {
             if (ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace XSOFT_WEB.Controllers
             return mdt;
 
         }
-        [HttpPut("{Numero}")]
+        [HttpPut("Edit")]
         public ModalitePaiement Put([FromBody]ModalitePaiement mdt)
         {
 
@@ -50,7 +50,7 @@ namespace XSOFT_WEB.Controllers
             return mdt;
 
         }
-        [HttpDelete("{numero}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
           

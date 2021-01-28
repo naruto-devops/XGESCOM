@@ -26,13 +26,13 @@ namespace XSOFT_WEB.Controllers
             return _CategorieTarifService.GetAll();
 
         }
-        [HttpGet("{code}")]
+        [HttpGet("Find/{id}")]
         public CategorieTarif GetById(int id)
         {
             return _CategorieTarifService.GetById(id);
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public CategorieTarif Post([FromBody]CategorieTarif categorie)
         {
             if (ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace XSOFT_WEB.Controllers
             return categorie;
 
         }
-        [HttpPut]
+        [HttpPut("Edit")]
         public CategorieTarif Put([FromBody]CategorieTarif categorie)
         {
 
@@ -50,7 +50,7 @@ namespace XSOFT_WEB.Controllers
             return categorie;
 
         }
-        [HttpDelete("{code}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
 
