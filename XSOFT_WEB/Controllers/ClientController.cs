@@ -38,6 +38,7 @@ namespace XSOFT_WEB.Controllers
         [HttpGet("Find/{id}")]
         public Client GetById(int id)
         {
+            
             return _clientService.GetById(id);
 
         }

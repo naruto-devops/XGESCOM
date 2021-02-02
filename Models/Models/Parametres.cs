@@ -19,12 +19,12 @@ namespace Models.Models
         public int StockNegatif { get; set; }
         public int Precisions { get; set; }
         public int Limit { get; set; }
-        public float TxVente1 { get; set; }
-        public float TxVente2 { get; set; }
-        public float TxVente3 { get; set; }
-        public float TxAchat1 { get; set; }
-        public float TxAchat2 { get; set; }
-        public float TxAchat3 { get; set; }
+        public double TxVente1 { get; set; }
+        public double TxVente2 { get; set; }
+        public double TxVente3 { get; set; }
+        public double TxAchat1 { get; set; }
+        public double TxAchat2 { get; set; }
+        public double TxAchat3 { get; set; }
         public int RegBL { get; set; }
         public int CollabClient { get; set; }
         public string DEVISE { get; set; }
@@ -134,8 +134,8 @@ namespace Models.Models
         public int MAILPORT { get; set; }
         public string MAILUSER { get; set; }
         public string MAILPASS { get; set; }
-        public float TxVente4 { get; set; }
-        public float TxAchat4 { get; set; }
+        public double TxVente4 { get; set; }
+        public double TxAchat4 { get; set; }
         public int RemisePied { get; set; }
         public int MES { get; set; }
 

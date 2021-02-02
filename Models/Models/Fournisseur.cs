@@ -21,7 +21,7 @@ namespace Models.Models
         public string CT_Ape { get; set; }
         public string CT_Identifiant { get; set; }
         public string CT_Siret { get; set; }
-        public float CT_Encours { get; set; }
+        public double CT_Encours { get; set; }
         public string CT_NumPayeur { get; set; }
         public int N_CatTarif { get; set; }
         public int N_CatCompta { get; set; }
@@ -33,12 +33,12 @@ namespace Models.Models
         public string CT_EMail { get; set; }
         public string CT_Site { get; set; }
         public string Timbre { get; set; }
-        public float CT_Remise { get; set; }
+        public double CT_Remise { get; set; }
         public string CT_CTVA { get; set; }
         public string CT_Categorie { get; set; }
         public int CT_Etranger { get; set; }
         public string CT_Devise { get; set; }
-        public float CT_CoursDevise { get; set; }
+        public double CT_CoursDevise { get; set; }
         public string CT_LIVADRESSE { get; set; }
         public string CT_LIVCP { get; set; }
         public string CT_LIVVILLE { get; set; }
