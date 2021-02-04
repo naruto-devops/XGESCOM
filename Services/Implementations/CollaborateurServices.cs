@@ -18,8 +18,9 @@ namespace Services
 
         public bool CheckCol_ExistClient(int id)
         {
-            var collaborateur = _CollaborateurRepository.GetByClient(id);
-            return collaborateur != null;
+            //var collaborateur = _CollaborateurRepository.GetByClient(id);
+            //return collaborateur != null;
+            return true;
         }
 
         public  List<Collaborateur> GetAll()

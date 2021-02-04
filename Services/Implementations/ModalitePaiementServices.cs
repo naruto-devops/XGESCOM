@@ -18,8 +18,9 @@ namespace Services.Implementations
 
         public bool CheckMDT_ExistClient(int id)
         {
-            var fat = _ModalitePaiementRepository.GetByClient(id);
-            return fat != null;
+            //var result = _ModalitePaiementRepository.GetByClient(id);
+            //return result != null;
+            return true;
         }
 
         public List<ModalitePaiement> GetAll()

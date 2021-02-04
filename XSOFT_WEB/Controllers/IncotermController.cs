@@ -20,26 +20,26 @@ namespace XSOFT_WEB.Controllers
         {
             _IncotermService = incoterm;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Incoterm> GetAll()
         {
             return _IncotermService.GetAll();
 
         }
-        [HttpGet("{Numero}")]
+        [HttpGet("Find/{id}")]
         public Incoterm GetById(int id)
         {
             return _IncotermService.GetById(id);
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public Incoterm Post([FromBody]Incoterm incoterm)
         {
             if (ModelState.IsValid)
                 _IncotermService.Add(incoterm);
             return incoterm;
         }
-        [HttpPut]
+        [HttpPut("Edit")]
         public Incoterm Put([FromBody]Incoterm incoterm)
         {
 
@@ -48,7 +48,7 @@ namespace XSOFT_WEB.Controllers
                 _IncotermService.Update(incoterm);
             return incoterm;
         }
-        [HttpDelete("{numero}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
              bool res = false;

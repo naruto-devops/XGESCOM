@@ -23,7 +23,7 @@ namespace Reposiotries.Implementations
         {
             get
             {
-                return new SqlConnection(Configuration.GetConnectionString("DefaultConnection"));
+                return new System.Data.SqlClient.SqlConnection(Configuration.GetConnectionString("DefaultConnection"));
             }
 
         }

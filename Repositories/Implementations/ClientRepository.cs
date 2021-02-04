@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Models.Data;
 using Models.Models;
 using Repositories.Contracts;
 using System;
@@ -13,19 +14,10 @@ namespace Repositories.Implementations
 {
     public class ClientRepository : IClientRepository
     {
-
-        IConfiguration Configuration { get; }
-        public ClientRepository(IConfiguration configuration)
+        XSoftContext _context;
+        public ClientRepository(XSoftContext context)
         {
-            Configuration = configuration;
-        }
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(Configuration.GetConnectionString("DefaultConnection"));
-            }
-
+            _context = context;
         }
 
         public List<Client> GetAll()
@@ -33,113 +25,85 @@ namespace Repositories.Implementations
             var res = new List<Client>();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select * from F_COMPTET where CT_Type = '0' ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<Client>(sQuery).ToList();
-
-                }
+                res = _context.Clients.ToList();
 
             }
             catch (Exception)
             {
-
-
+                res = null;
             }
 
             return res;
         }
-
 
         public Client GetById(int id)
         {
-            var res = new Client();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select * from F_COMPTET where CT_Type = '0' and cbMarq =@Id ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<Client>(sQuery, new { Id = id }).FirstOrDefault();
+                var res = _context.Clients.FirstOrDefault(r => r.ID.Equals(id));
+                return res;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
-                }
+        public Client Add(Client Client)
+        {
+            try
+            {
+                _context.Clients.Add(Client);
+                _context.SaveChanges();
 
             }
             catch (Exception)
             {
-
-
+                return null;
             }
-            return res;
+            return Client;
         }
 
-
-        public void Add(Client clt)
+        public bool Delete(int id)
         {
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
+                var res = _context.Clients.FirstOrDefault(r => r.ID.Equals(id));
+                if (res != null)
                 {
-                    string sQuery = @"INSERT INTO F_COMPTET
-                                    (CT_Num,CT_Intitule,CT_Type  ,CG_NumPrinc                )
-                                     VALUES  (@CT_Num ,@CT_Intitule  ,@CT_Type ,@CG_NumPrinc          )";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, clt);
-
+                    _context.Clients.Remove(res);
+                    _context.SaveChanges();
                 }
+                else
+                    return false;
+
 
             }
             catch (Exception)
             {
-
+                return false;
 
             }
-
+            return true;
         }
 
-        public void Delete(string id)
+        public Client Update(Client Client)
         {
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"Delete from F_COMPTET where CT_Type = '0' and CT_NUM =@Id ";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, new { ID = id });
-                }
+                _context.Update(Client);
+                _context.SaveChanges();
 
             }
             catch (Exception)
             {
-
+                return null;
 
             }
-
+            return Client;
         }
 
-        public void Update(string id)
-        {
-
-            try
-            {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"update F_COMPTET set CT_Intitule='hamadiabid'
-                                     where CT_NUM =@Id ";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, new { ID = id });
-                }
-
-            }
-            catch (Exception)
-            {
-
-
-            }
-
-        }
     }
 }

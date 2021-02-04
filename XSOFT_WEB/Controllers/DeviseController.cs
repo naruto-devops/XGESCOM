@@ -20,26 +20,34 @@ namespace XSOFT_WEB.Controllers
         {
             _DeviseService = dvs;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Devise> GetAll()
         {
             return _DeviseService.GetAll();
 
         }
-        [HttpGet("{code}")]
-        public Devise GetById(int id)
+        [HttpGet("Find/{id}")]
+        public ActionResult<Devise> GetById(int id)
         {
-            return _DeviseService.GetById(id);
+            var res = _DeviseService.GetById(id);
+            if (res is null)
+                return NotFound();
+            else
+                return Ok(res);
 
         }
-        [HttpPost]
-        public Devise Post([FromBody]Devise dvs)
+        [HttpPost("Create")]
+        public Devise Post([FromBody]Devise devise)
         {
+            Devise res = new Devise();
             if (ModelState.IsValid)
-                _DeviseService.Add(dvs);
-            return dvs;
+                                 res  =   _DeviseService.Add(devise);
+            if (res is null)
+                return null;
+            else
+            return devise;
         }
-        [HttpPut]
+        [HttpPut("Edit")]
         public Devise Put([FromBody]Devise dvs)
         {
 
@@ -48,19 +56,21 @@ namespace XSOFT_WEB.Controllers
                 _DeviseService.Update(dvs);
             return dvs;
         }
-        [HttpDelete("{code}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
-            bool res = false;
+           
 
-            if (_DeviseService.CheckDev_ExistClient(id)==false)
-            {
-                _DeviseService.Delete(id);
-                res = true;
-            }
-
-            return res;
+            //  if (_DeviseService.CheckDev_ExistClient(id)==false)
+            //  {
             
+                
+            
+           
+                return  _DeviseService.Delete(id);
+           
+
+
 
         }
     }

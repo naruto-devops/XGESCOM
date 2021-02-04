@@ -20,19 +20,19 @@ namespace XSOFT_WEB.Controllers
         {
             _FamilleTierService = fts;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public List<FamilleTier> GetAll()
         {
             return _FamilleTierService.GetAll();
 
         }
-        [HttpGet("{code}")]
+        [HttpGet("Find/{id}")]
         public FamilleTier GetById(int id)
         {
             return _FamilleTierService.GetById(id);
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public FamilleTier Post([FromBody]FamilleTier ft)
         {
             if (ModelState.IsValid)
@@ -40,7 +40,7 @@ namespace XSOFT_WEB.Controllers
             return ft;
 
         }
-        [HttpPut]
+        [HttpPut("Edit")]
         public FamilleTier Put([FromBody]FamilleTier ft)
         {
             
@@ -50,7 +50,7 @@ namespace XSOFT_WEB.Controllers
             return ft;
 
         }
-        [HttpDelete("{code}")]
+        [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
             bool res = false;

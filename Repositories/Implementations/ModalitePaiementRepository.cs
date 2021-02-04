@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Models;
+using Models.Data;
 using Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -13,44 +14,24 @@ namespace Repositories.Implementations
 {
   public   class ModalitePaiementRepository : IModalitePaiementRepository
     {
-        IConfiguration Configuration { get; }
-        public ModalitePaiementRepository(IConfiguration configuration)
+        XSoftContext _context;
+        public ModalitePaiementRepository(XSoftContext context)
         {
-            Configuration = configuration;
+            _context = context;
         }
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(Configuration.GetConnectionString("DefaultConnection"));
-            }
 
-        }
 
         public List<ModalitePaiement> GetAll()
         {
             var res = new List<ModalitePaiement>();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select    EMR_NO as Numero,
-                                            EMR_Intitule as Intitule,
-                                            EMR_Code as Code,
-                                            EMR_Description as Description
-
-                                     from F_MODELREGENT
-                                      ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<ModalitePaiement>(sQuery).ToList();
-
-                }
+                res = _context.ModalitePaiements.ToList();
 
             }
             catch (Exception)
             {
-
-
+                res = null;
             }
 
             return res;
@@ -59,83 +40,52 @@ namespace Repositories.Implementations
 
         public ModalitePaiement GetById(int id)
         {
-            var res = new ModalitePaiement();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select    EMR_NO as Numero,
-                                            EMR_Intitule as Intitule,
-                                            EMR_Code as Code,
-                                            EMR_Description as Description
-
-                                     from F_MODELREGENT
-                                     where EMR_NO  =@Id ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<ModalitePaiement>(sQuery, new { Id = id }).FirstOrDefault();
-
-                }
-
+                var res = _context.ModalitePaiements.FirstOrDefault(r => r.ID.Equals(id));
+                return res;
             }
             catch (Exception)
             {
                 return null;
-
             }
-            return res;
         }
 
-        public ModalitePaiement GetByClient(int id)
+        //public ModalitePaiement GetByClient(int id)
+        //{
+        //    var res = new ModalitePaiement();
+        //    try
+        //    {
+        //        using (var db = new XSoftContext())
+        //        {
+        //            var result = db.Clients.Where(r => r.ModalitePaiementId.Equals(id)).FirstOrDefault();
+
+
+        //        }
+
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+
+        //    }
+        //    return res;
+        //}
+
+        public ModalitePaiement Add(ModalitePaiement dvs)
         {
-            var res = new ModalitePaiement();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select    EMR_NO as Numero,
-                                            EMR_Intitule as Intitule,
-                                            EMR_Code as Code,
-                                            EMR_Description as Description
-
-                                     from F_MODELREGENT
-                                     where EMR_NO  =@Id and EMR_Code in (select distinct EMR_CODE from F_COMPTET); ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<ModalitePaiement>(sQuery, new { Id = id }).FirstOrDefault();
-
-                }
+                _context.ModalitePaiements.Add(dvs);
+                _context.SaveChanges();
 
             }
             catch (Exception)
             {
                 return null;
-
             }
-            return res;
-        }
-
-        public ModalitePaiement Add(ModalitePaiement mlt)
-        {
-            
-            try
-            {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"INSERT INTO   F_MODELREGENT
-                                    (   EMR_Intitule,EMR_Code,EMR_Description
-                                        )
-                                     VALUES  (@Intitule,@Code,@Description )";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, mlt);
-
-                }
-
-            }
-            catch (Exception)
-            {
-                return null;
-
-            }
-            return mlt;
+            return dvs;
         }
 
         public bool Delete(int id)
@@ -143,12 +93,15 @@ namespace Repositories.Implementations
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
+                var res = _context.ModalitePaiements.FirstOrDefault(r => r.ID.Equals(id));
+                if (res != null)
                 {
-                    string sQuery = @"Delete from F_MODELREGENT where   EMR_NO = @Id ";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, new { ID = id });
+                    _context.ModalitePaiements.Remove(res);
+                    _context.SaveChanges();
                 }
+                else
+                    return false;
+
 
             }
             catch (Exception)
@@ -159,21 +112,13 @@ namespace Repositories.Implementations
             return true;
         }
 
-        public ModalitePaiement Update(ModalitePaiement mlt)
+        public ModalitePaiement Update(ModalitePaiement ModalitePaiement)
         {
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"update  F_MODELREGENT set  
-                                      EMR_Intitule=@Intitule,EMR_Code=@Code,EMR_Description=@Description
-                                      where  EMR_NO=@Numero";
-
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, mlt);
-
-                }
+                _context.Update(ModalitePaiement);
+                _context.SaveChanges();
 
             }
             catch (Exception)
@@ -181,7 +126,7 @@ namespace Repositories.Implementations
                 return null;
 
             }
-            return mlt;
+            return ModalitePaiement;
         }
     }
 }
