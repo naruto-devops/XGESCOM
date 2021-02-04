@@ -9,7 +9,7 @@ namespace Repositories.Contracts
     {
         List<Collaborateur> GetAll();
         Collaborateur GetById(int id);
-        Collaborateur GetByClient(int id);
+       // Collaborateur GetByClient(int id);
         Collaborateur Add(Collaborateur cbl);
         Collaborateur Update(Collaborateur cbl);
         bool Delete(int id);

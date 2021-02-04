@@ -20,7 +20,7 @@ namespace Models.Data.Configurations
 
             //--linkCategorieTarif
             builder.HasOne(d => d.CategorieTarif)
-                           .WithMany(s => s.FamilleTier)
+                           .WithMany(s => s.FamilleTiers)
                            .HasForeignKey(s => s.CategorieTarifId);
         }
     

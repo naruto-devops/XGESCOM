@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Models.Data;
 using Models.Models;
@@ -7,26 +6,27 @@ using Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
 namespace Repositories.Implementations
 {
-   public class CollaborateurRepository : ICollaborateurRepository
+   public class UtilisateurRepository :IUtilisateurRepository
     {
         XSoftContext _context;
-        public CollaborateurRepository(XSoftContext context)
+        public UtilisateurRepository(XSoftContext context)
         {
             _context = context;
         }
 
-        public List<Collaborateur> GetAll()
+        public List<Utilisateur> GetAll()
         {
-            var res = new List<Collaborateur>();
+            var res = new List<Utilisateur>();
             try
             {
-                res = _context.Collaborateurs.ToList();
-                
+                res = _context.Utilisateurs.ToList();
+
             }
             catch (Exception)
             {
@@ -36,11 +36,11 @@ namespace Repositories.Implementations
             return res;
         }
 
-        public Collaborateur GetById(int id)
+        public Utilisateur GetById(int id)
         {
             try
             {
-                var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
+                var res = _context.Utilisateurs.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
             catch (Exception)
@@ -49,11 +49,11 @@ namespace Repositories.Implementations
             }
         }
 
-        public Collaborateur Add(Collaborateur collaborateur)
+        public Utilisateur Add(Utilisateur Utilisateur)
         {
             try
             {
-                _context.Collaborateurs.Add(collaborateur);
+                _context.Utilisateurs.Add(Utilisateur);
                 _context.SaveChanges();
 
             }
@@ -61,7 +61,7 @@ namespace Repositories.Implementations
             {
                 return null;
             }
-            return collaborateur;
+            return Utilisateur;
         }
 
         public bool Delete(int id)
@@ -69,10 +69,10 @@ namespace Repositories.Implementations
 
             try
             {
-                var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
+                var res = _context.Utilisateurs.FirstOrDefault(r => r.ID.Equals(id));
                 if (res != null)
                 {
-                    _context.Collaborateurs.Remove(res);
+                    _context.Utilisateurs.Remove(res);
                     _context.SaveChanges();
                 }
                 else
@@ -88,12 +88,12 @@ namespace Repositories.Implementations
             return true;
         }
 
-        public Collaborateur Update(Collaborateur collaborateur)
+        public Utilisateur Update(Utilisateur Utilisateur)
         {
 
             try
             {
-                _context.Update(collaborateur);
+                _context.Update(Utilisateur);
                 _context.SaveChanges();
 
             }
@@ -102,7 +102,8 @@ namespace Repositories.Implementations
                 return null;
 
             }
-            return collaborateur;
+            return Utilisateur;
         }
+    
     }
 }

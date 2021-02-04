@@ -27,17 +27,25 @@ namespace XSOFT_WEB.Controllers
 
         }
         [HttpGet("Find/{id}")]
-        public Devise GetById(int id)
+        public ActionResult<Devise> GetById(int id)
         {
-            return _DeviseService.GetById(id);
+            var res = _DeviseService.GetById(id);
+            if (res is null)
+                return NotFound();
+            else
+                return Ok(res);
 
         }
         [HttpPost("Create")]
-        public Devise Post([FromBody]Devise dvs)
+        public Devise Post([FromBody]Devise devise)
         {
+            Devise res = new Devise();
             if (ModelState.IsValid)
-                _DeviseService.Add(dvs);
-            return dvs;
+                                 res  =   _DeviseService.Add(devise);
+            if (res is null)
+                return null;
+            else
+            return devise;
         }
         [HttpPut("Edit")]
         public Devise Put([FromBody]Devise dvs)
@@ -51,16 +59,18 @@ namespace XSOFT_WEB.Controllers
         [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
-            bool res = false;
+           
 
-            if (_DeviseService.CheckDev_ExistClient(id)==false)
-            {
-                _DeviseService.Delete(id);
-                res = true;
-            }
-
-            return res;
+            //  if (_DeviseService.CheckDev_ExistClient(id)==false)
+            //  {
             
+                
+            
+           
+                return  _DeviseService.Delete(id);
+           
+
+
 
         }
     }

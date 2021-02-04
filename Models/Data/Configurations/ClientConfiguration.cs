@@ -12,7 +12,7 @@ namespace Models.Data.Configurations
         public void Configure(EntityTypeBuilder<Client> builder)
         {
 
-            builder.Property(s => s.Numerotation).HasMaxLength(17);
+            builder.Property(s => s.Codification).HasMaxLength(17);
             builder.Property(s => s.Intitule).HasMaxLength(35);
             builder.Property(s => s.NumeroPrincipale).HasMaxLength(13);
             builder.Property(s => s.ContactPrincipale).HasMaxLength(35);
@@ -54,6 +54,7 @@ namespace Models.Data.Configurations
             //builder.Property(s => s.CodePostal).HasMaxLength(5);
             //builder.HasIndex(e => e.CodeRegion)
             // .HasName("UnicityCodeRegion").IsUnique();
+            
             //--Linkcategorietarif
 
             builder.HasOne(d => d.CategorieTarif)
@@ -80,12 +81,12 @@ namespace Models.Data.Configurations
                                .WithMany(s => s.Clients)
                                .HasForeignKey(s => s.ModalitePaiementId);
             //--Link Utilisateurs
-             builder.HasOne(d => d.Utilisateur)
-                            .WithMany(s => s.Clients)
+             builder.HasOne(d => d.CREATEUR)
+                            .WithMany(s => s.ClientCrees)
                             .HasForeignKey(s => s.CREATEURId);
 
-            builder.HasOne(d => d.Utilisateur)
-                            .WithMany(s => s.Clients)
+            builder.HasOne(d => d.MODIFICATEUR)
+                            .WithMany(s => s.ClientModifies)
                             .HasForeignKey(s => s.MODIFICATEURId);
 
 

@@ -11,8 +11,9 @@ namespace Repositories.Contracts
         Client GetById(int id);
         Client Add(Client client);
         Client Update(Client client);
-        Client GetByDocLig(int id);
+       
         bool Delete(int id);
-        FamilleTier GetFamilleTier(int id);
+        //FamilleTier GetFamilleTier(int id);
+        //Client GetByDocLig(int id);
     }
 }

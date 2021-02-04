@@ -11,9 +11,9 @@ namespace Services.Contracts
         Client GetById(int id);
         Client Add(Client client);
         Client Update( Client client);
-        bool CheckUnicCodification(string code);
-        bool CheckClient_ExistDocLig(int id);
+        //bool CheckUnicCodification(string code);
+        //bool CheckClient_ExistDocLig(int id);
         bool Delete(int id);
-        FamilleTier GetfamTier(int id); 
+        //FamilleTier GetfamTier(int id); 
     }
 }

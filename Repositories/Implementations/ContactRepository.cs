@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Models.Data;
 using Models.Models;
@@ -7,26 +6,28 @@ using Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
 namespace Repositories.Implementations
 {
-   public class CollaborateurRepository : ICollaborateurRepository
+    public class ContactRepository : IContactRepository
     {
+
         XSoftContext _context;
-        public CollaborateurRepository(XSoftContext context)
+        public ContactRepository(XSoftContext context)
         {
             _context = context;
         }
 
-        public List<Collaborateur> GetAll()
+        public List<Contact> GetAll()
         {
-            var res = new List<Collaborateur>();
+            var res = new List<Contact>();
             try
             {
-                res = _context.Collaborateurs.ToList();
-                
+                res = _context.Contacts.ToList();
+
             }
             catch (Exception)
             {
@@ -36,11 +37,11 @@ namespace Repositories.Implementations
             return res;
         }
 
-        public Collaborateur GetById(int id)
+        public Contact GetById(int id)
         {
             try
             {
-                var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
+                var res = _context.Contacts.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
             catch (Exception)
@@ -49,11 +50,11 @@ namespace Repositories.Implementations
             }
         }
 
-        public Collaborateur Add(Collaborateur collaborateur)
+        public Contact Add(Contact contact)
         {
             try
             {
-                _context.Collaborateurs.Add(collaborateur);
+                _context.Contacts.Add(contact);
                 _context.SaveChanges();
 
             }
@@ -61,7 +62,7 @@ namespace Repositories.Implementations
             {
                 return null;
             }
-            return collaborateur;
+            return contact;
         }
 
         public bool Delete(int id)
@@ -69,10 +70,10 @@ namespace Repositories.Implementations
 
             try
             {
-                var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
+                var res = _context.Contacts.FirstOrDefault(r => r.ID.Equals(id));
                 if (res != null)
                 {
-                    _context.Collaborateurs.Remove(res);
+                    _context.Contacts.Remove(res);
                     _context.SaveChanges();
                 }
                 else
@@ -88,12 +89,12 @@ namespace Repositories.Implementations
             return true;
         }
 
-        public Collaborateur Update(Collaborateur collaborateur)
+        public Contact Update(Contact contact)
         {
 
             try
             {
-                _context.Update(collaborateur);
+                _context.Update(contact);
                 _context.SaveChanges();
 
             }
@@ -102,7 +103,7 @@ namespace Repositories.Implementations
                 return null;
 
             }
-            return collaborateur;
+            return contact;
         }
     }
 }

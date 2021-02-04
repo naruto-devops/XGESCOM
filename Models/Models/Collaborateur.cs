@@ -8,7 +8,7 @@ namespace Models.Models
    public class Collaborateur
     {
         [Key]
-        public int Numero { get; set; }
+        public int ID { get; set; }
         public string    Nom { get; set; }
         public string   Prenom { get; set; }
         public string    Fonction { get; set; }

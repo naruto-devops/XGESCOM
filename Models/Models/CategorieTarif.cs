@@ -8,7 +8,7 @@ namespace Models.Models
     public class CategorieTarif
     {
         [Key]
-        public int Numero { get; set; }
+        public int ID { get; set; }
         public string Categorie { get; set; }
         public int PrixTTC { get; set; }
 

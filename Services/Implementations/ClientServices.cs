@@ -22,22 +22,22 @@ namespace Services
             _parametresService = parametres;
         }
 
-        public bool CheckUnicCodification(string code)
-        {
-            List<Client> _listeClient = new List<Client>();
-            _listeClient = _ClientRepository.GetAll();
-            var res = false;
-           foreach (Client client in _listeClient)
-            {
-                if (client.Intitule == code)
-                {
-                    res = true;
-                    break;
-                }                    
-            }
+        //public bool CheckUnicCodification(string code)
+        //{
+        //    List<Client> _listeClient = new List<Client>();
+        //    _listeClient = _ClientRepository.GetAll();
+        //    var res = false;
+        //   foreach (Client client in _listeClient)
+        //    {
+        //        if (client.Intitule == code)
+        //        {
+        //            res = true;
+        //            break;
+        //        }                    
+        //    }
 
-            return res;
-        }
+        //    return res;
+        //}
 
         public List<Client> GetAll()
         {
@@ -54,34 +54,35 @@ namespace Services
         public Client Add(Client client)
         {
             Client result = new Client();
-
-            var codification = _parametresService.Check_IncrementCodification();
-            if (codification == 0)
-            {
-                if (!CheckUnicCodification(client.Numero))
-                {
-                    _ClientRepository.Add(client);
-                    result = client;
-
-                }
-                else
-                {
-                    result = null;
-                }
-
-            }
-            else if (codification == 1)  
-            {
-                Parametres parametre = _parametresService.GetAll();
-                string codeClient = parametre.NUMCLI;
-
-                client.Numero = codeClient.IncrementCode();
-                result = _ClientRepository.Add(client);
-                parametre.NUMCLI = client.Numero;
-                _parametresService.UpdateNUMCLI(codeClient);
-            }
-
+            result = _ClientRepository.Add(client);
             return result;
+            //var codification = _parametresService.Check_IncrementCodification();
+            //if (codification == 0)
+            //{
+            //    if (!CheckUnicCodification(client.Codification))
+            //    {
+            //        _ClientRepository.Add(client);
+            //        result = client;
+
+            //    }
+            //    else
+            //    {
+            //        result = null;
+            //    }
+
+            //}
+            //else if (codification == 1)  
+            //{
+            //    Parametres parametre = _parametresService.GetAll();
+            //    string codeClient = parametre.NUMCLI;
+
+            //    client.Codification = codeClient.IncrementCode();
+            //    result = _ClientRepository.Add(client);
+            //    parametre.NUMCLI = client.Codification;
+            //    _parametresService.UpdateNUMCLI(codeClient);
+            //}
+
+            //return result;
             
 
         }
@@ -98,16 +99,16 @@ namespace Services
 
         }
 
-        public bool CheckClient_ExistDocLig( int id)
-        {
-            var result = _ClientRepository.GetByDocLig(id);
-            return result != null;
-        }
+        //public bool CheckClient_ExistDocLig( int id)
+        //{
+        //    var result = _ClientRepository.GetByDocLig(id);
+        //    return result != null;
+        //}
 
-        public FamilleTier GetfamTier(int id)
-        {
-            return _ClientRepository.GetFamilleTier(id);
-        }
+        //public FamilleTier GetfamTier(int id)
+        //{
+        //    return _ClientRepository.GetFamilleTier(id);
+        //}
 
     }
 }

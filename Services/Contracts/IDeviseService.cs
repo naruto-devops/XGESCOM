@@ -12,7 +12,7 @@ namespace Services.Contracts
         Devise Add(Devise cbl);
         Devise Update(Devise cbl);
 
-        bool CheckDev_ExistClient(int id);
+       // bool CheckDev_ExistClient(int id);
         bool Delete(int id);
     }
 }

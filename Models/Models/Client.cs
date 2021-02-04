@@ -8,8 +8,8 @@ namespace Models.Models
     public class Client
     {
         [Key]
-        public int CBMarque { get; set; }
-        public string Numerotation { get; set; }
+        public int ID { get; set; }
+        public string Codification { get; set; }
         public string Intitule { get; set; }
         public int Type { get; set; }
         public string NumeroPrincipale { get; set; }
@@ -84,6 +84,9 @@ namespace Models.Models
         //ModalitePaiement --- link 
         public ModalitePaiement ModalitePaiement { get; set; }
         public int? ModalitePaiementId { get; set; }
+
+
+        public virtual IEnumerable<Contact> Contacts { get; set; }
 
     }
 }

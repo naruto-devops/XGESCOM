@@ -56,8 +56,8 @@ namespace Services.Implementations
             for (int i = 0; i < intCodeArray.Length; i++)
                 intCode += intCodeArray[i];
 
-            int x = 0;
-            if (int.TryParse(intCode, out x))
+            
+            if (int.TryParse(intCode, out int x))
             {
                 if (x == 0)
                     intCode = "1" + intCode;

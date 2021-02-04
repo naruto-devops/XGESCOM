@@ -9,10 +9,9 @@ namespace Models.Models
    public  class FamilleTier
     {
         [Key]
-        public int Numero { get; set; }
+        public int ID { get; set; }
         public string Code { get; set; }
         public string Libelle { get; set; }
-        public int CategorieTarif { get; set; }
         public int   Exonere { get; set; }
 
         public virtual IEnumerable<Client> Clients { get; set; }

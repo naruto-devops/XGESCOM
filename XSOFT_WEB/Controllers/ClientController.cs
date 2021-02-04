@@ -66,12 +66,12 @@ namespace XSOFT_WEB.Controllers
         {
             bool res = false;
 
-            if (_clientService.CheckClient_ExistDocLig(id) == false)
-            {
+            //if (_clientService.CheckClient_ExistDocLig(id) == false)
+            //{
                 _clientService.Delete(id);
                 res = true;
 
-            }
+            //}
 
             return res;
             

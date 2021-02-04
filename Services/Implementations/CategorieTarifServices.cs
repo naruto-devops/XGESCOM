@@ -19,8 +19,9 @@ namespace Services.Implementations
 
         public bool CheckCategorie_ExistClient(int id)
         {
-            var fat = _CategorieTarifRepository.GetByClient(id);
-            return fat != null;
+            //var fat = _CategorieTarifRepository.GetByClient(id);
+            //return fat != null;
+            return true;
         }
 
         public List<CategorieTarif> GetAll()

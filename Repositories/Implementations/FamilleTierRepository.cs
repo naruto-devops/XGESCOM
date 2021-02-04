@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Models.Data;
 using Models.Models;
 using Repositories.Contracts;
 using System;
@@ -14,39 +15,24 @@ namespace Repositories.Implementations
    public  class FamilleTierRepository: IFamilleTierRepository
 
     {
-        IConfiguration Configuration { get; }
-        public FamilleTierRepository(IConfiguration configuration)
+        XSoftContext _context;
+        public FamilleTierRepository(XSoftContext context)
         {
-            Configuration = configuration;
+            _context = context;
         }
-        public IDbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(Configuration.GetConnectionString("DefaultConnection"));
-            }
 
-        }
 
         public List<FamilleTier> GetAll()
         {
             var res = new List<FamilleTier>();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select FC_NO as Numero, FC_Code as Code, FC_Libelle as Libelle,
-                                        FC_Cattarif as CategorieTarif, Fc_Exonere as Exonere  from F_FamilleTier  ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<FamilleTier>(sQuery).ToList();
-
-                }
+                res = _context.FamilleTiers.ToList();
 
             }
             catch (Exception)
             {
-                return null;
-
+                res = null;
             }
 
             return res;
@@ -55,73 +41,52 @@ namespace Repositories.Implementations
 
         public FamilleTier GetById(int id)
         {
-            var res = new FamilleTier();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"select  FC_NO as Numero, FC_Code as Code, FC_Libelle as Libelle, FC_Cattarif as CategorieTarif,
-                                        Fc_Exonere as Exonere from F_FamilleTier where FC_NO =@Id ";
-                    dbConnection.Open();
-                    res= dbConnection.Query<FamilleTier>(sQuery, new { Id = id }).FirstOrDefault();
-
-                }
-
+                var res = _context.FamilleTiers.FirstOrDefault(r => r.ID.Equals(id));
+                return res;
             }
             catch (Exception)
             {
                 return null;
-
             }
-            return res;
         }
 
-        public FamilleTier GetByClient(int id)
+        //public FamilleTier GetByClient(int id)
+        //{
+        //    var res = new FamilleTier();
+        //    try
+        //    {
+        //        using (var db = new XSoftContext())
+        //        {
+        //            var result = db.Clients.Where(r => r.FamilleTierId.Equals(id)).FirstOrDefault();
+
+
+        //        }
+
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+
+        //    }
+        //    return res;
+        //}
+
+        public FamilleTier Add(FamilleTier dvs)
         {
-            var res = new FamilleTier();
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @" select FC_No as Numero, FC_Code as Code, FC_Libelle as Libelle,
-                                        FC_Cattarif as CategorieTarif, Fc_Exonere as Exonere from F_FamilleTier 
-                                        where FC_NO =@Id and FC_NO in (select distinct FC_no from F_COMPTET) ";
-                    dbConnection.Open();
-                    res = dbConnection.Query<FamilleTier>(sQuery, new { Id = id }).FirstOrDefault();
-
-                }
+                _context.FamilleTiers.Add(dvs);
+                _context.SaveChanges();
 
             }
             catch (Exception)
             {
                 return null;
-
             }
-            return res;
-        }
-
-        public FamilleTier Add(FamilleTier fat)
-        {
-          
-            try
-            {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"INSERT INTO F_FamilleTier
-                                    ( fc_code,fc_libelle,fc_cattarif,fc_exonere                )
-                                     VALUES  (@Code,@Libelle,@CategorieTarif,@Exonere)";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, fat);
-
-                }
-
-            }
-            catch (Exception)
-            {
-                return null;
-
-            }
-            return fat;
+            return dvs;
         }
 
         public bool Delete(int id)
@@ -129,12 +94,15 @@ namespace Repositories.Implementations
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
+                var res = _context.FamilleTiers.FirstOrDefault(r => r.ID.Equals(id));
+                if (res != null)
                 {
-                    string sQuery = @"Delete from F_FamilleTier where FC_NO = @Id ";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, new { ID = id });
+                    _context.FamilleTiers.Remove(res);
+                    _context.SaveChanges();
                 }
+                else
+                    return false;
+
 
             }
             catch (Exception)
@@ -145,19 +113,13 @@ namespace Repositories.Implementations
             return true;
         }
 
-        public FamilleTier Update( FamilleTier fat)
+        public FamilleTier Update(FamilleTier FamilleTier)
         {
 
             try
             {
-                using (IDbConnection dbConnection = Connection)
-                {
-                    string sQuery = @"update F_FamilleTier set  fc_libelle =@libelle , fc_cattarif=@categorietarif,
-                                    fc_exonere=@exonere   where FC_NO =@Numero ";
-                    dbConnection.Open();
-                    dbConnection.Execute(sQuery, fat);
-
-                }
+                _context.Update(FamilleTier);
+                _context.SaveChanges();
 
             }
             catch (Exception)
@@ -165,7 +127,7 @@ namespace Repositories.Implementations
                 return null;
 
             }
-            return fat;
+            return FamilleTier;
         }
     }
 }

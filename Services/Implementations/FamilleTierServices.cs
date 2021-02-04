@@ -18,8 +18,9 @@ namespace Services.Implementations
 
         public bool CheckFAT_ExistClient(int id)
         {
-            var fat = _FamilleTierRepository.GetByClient(id);
-            return fat != null;
+            //var fat = _FamilleTierRepository.GetByClient(id);
+            //return fat != null;
+            return true;
         }
 
         public List<FamilleTier> GetAll()
