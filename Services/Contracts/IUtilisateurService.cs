@@ -11,9 +11,13 @@ namespace Services.Contracts
         Utilisateur GetById(int id);
         Utilisateur Add(Utilisateur cbl);
         Utilisateur Update(Utilisateur cbl);
-
-        bool CheckUser_ExistCollaborateur(int id);
         bool Delete(int id);
+
+        Collaborateur CheckUser_ExistCollaborateur(int id);
+
+        Client CheckModificator_ExistClient(int id);
+        Client CheckCreator_ExistClient(int id);
+        
     }
 }
 

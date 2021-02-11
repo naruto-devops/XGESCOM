@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Models;
 using Repositories.Contracts;
 using Services.Contracts;
 using System;
@@ -16,42 +17,92 @@ namespace Services.Implementations
             _ModalitePaiementRepository = fat;
         }
 
-        public bool CheckMDT_ExistClient(int id)
-        {
-            //var result = _ModalitePaiementRepository.GetByClient(id);
-            //return result != null;
-            return true;
-        }
-
+      
         public List<ModalitePaiement> GetAll()
         {
             List<ModalitePaiement> result = new List<ModalitePaiement>();
-            result = _ModalitePaiementRepository.GetAll();
-            return result;
+            try
+            {
+                result = _ModalitePaiementRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public ModalitePaiement GetById(int id)
         {
-            return _ModalitePaiementRepository.GetById(id);
+            try
+            {
+                return _ModalitePaiementRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public ModalitePaiement Add(ModalitePaiement fat)
+        public ModalitePaiement Add(ModalitePaiement mod)
         {
-            _ModalitePaiementRepository.Add(fat);
+            try
+            {
+                _ModalitePaiementRepository.Add(mod);
 
-            return fat;
+                return mod;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
 
-        public ModalitePaiement Update(ModalitePaiement fat)
+        public ModalitePaiement Update(ModalitePaiement mod)
         {
-            _ModalitePaiementRepository.Update(fat);
-            return fat;
+            try
+            {
+                _ModalitePaiementRepository.Update(mod);
+                return mod;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            return _ModalitePaiementRepository.Delete(id);
+            try
+            {
+                return _ModalitePaiementRepository.Delete(id);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public Client CheckModalite_ExistClient(int id)
+        {
+            try
+            {
+                return _ModalitePaiementRepository.GetByClient(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
 
 
         }

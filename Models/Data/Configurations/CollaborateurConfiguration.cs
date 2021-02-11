@@ -23,6 +23,7 @@ namespace Models.Data.Configurations
             builder.Property(s => s.EMail).HasMaxLength(69);
             builder.Property(s => s.Matricule).HasMaxLength(11);
 
+            builder.Property(s => s.Deleted).HasDefaultValue(false);
         }
     }
 }

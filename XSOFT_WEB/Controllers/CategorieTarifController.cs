@@ -53,10 +53,10 @@ namespace XSOFT_WEB.Controllers
         [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
-
+            
             bool res = false;
 
-            if (_CategorieTarifService.CheckCategorie_ExistClient(id)==false)
+            if (_CategorieTarifService.CheckCategorie_ExistClient(id) == null)
             {
                 _CategorieTarifService.Delete(id);
                 res = true;

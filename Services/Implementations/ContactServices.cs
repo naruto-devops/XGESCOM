@@ -26,32 +26,71 @@ namespace Services.Implementations
         public List<Contact> GetAll()
         {
             List<Contact> result = new List<Contact>();
-            result = _ContactRepository.GetAll();
-            return result;
+            try
+            {
+                result = _ContactRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Contact GetById(int id)
         {
-            return _ContactRepository.GetById(id);
+            try
+            {
+                return _ContactRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Contact Add(Contact contact)
         {
-            _ContactRepository.Add(contact);
+            try
+            {
+                _ContactRepository.Add(contact);
+                return contact;
+            }
+            catch (Exception ex)
+            {
 
-            return contact;
+                throw ex;
+            }
 
         }
 
         public Contact Update(Contact contact)
         {
-            _ContactRepository.Update(contact);
-            return contact;
+            try
+            {
+                _ContactRepository.Update(contact);
+                return contact;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            return _ContactRepository.Delete(id);
+            try
+            {
+                return _ContactRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }

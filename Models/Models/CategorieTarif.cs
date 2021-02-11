@@ -10,8 +10,8 @@ namespace Models.Models
         [Key]
         public int ID { get; set; }
         public string Categorie { get; set; }
-        public int PrixTTC { get; set; }
-
+        public bool PrixTTC { get; set; }
+        public bool Deleted { get; set; }
         public virtual IEnumerable<Client> Clients { get; set; }
         public virtual IEnumerable<FamilleTier> FamilleTiers { get; set; }
     }

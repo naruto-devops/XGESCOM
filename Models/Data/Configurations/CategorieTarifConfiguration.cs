@@ -15,6 +15,7 @@ namespace Models.Data.Configurations
         builder.Property(s => s.Categorie).HasMaxLength(12);
         builder.HasIndex(e => e.Categorie)
                .HasName("UnicityCategorie").IsUnique();
+        builder.Property(s => s.Deleted).HasDefaultValue(false);
 
         }
 

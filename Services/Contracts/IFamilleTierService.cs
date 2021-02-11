@@ -11,8 +11,8 @@ namespace Services.Contracts
         FamilleTier GetById(int id);
         FamilleTier Add(FamilleTier cbl);
         FamilleTier Update(FamilleTier cbl);
-
-        bool CheckFAT_ExistClient(int id);
+        Client CheckFamilleTier_ExistClient(int id);
+         
         bool Delete(int id);
     }
 }

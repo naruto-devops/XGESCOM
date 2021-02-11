@@ -26,14 +26,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.CategorieTarifs.ToList();
-
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+           
         }
 
         public CategorieTarif GetById(int id)
@@ -43,9 +43,9 @@ namespace Repositories.Implementations
                 var res = _context.CategorieTarifs.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                 throw ex;
             }
         }
        
@@ -55,13 +55,13 @@ namespace Repositories.Implementations
             {
                 _context.CategorieTarifs.Add(categorie);
                 _context.SaveChanges();
-
+                return categorie;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                 throw ex;
             }
-            return categorie;
+            
         }
 
         public bool Delete(int id)
@@ -70,22 +70,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.CategorieTarifs.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.CategorieTarifs.Remove(res);
+                    _context.CategorieTarifs.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public CategorieTarif Update(CategorieTarif categorieTarif)
@@ -95,37 +97,32 @@ namespace Repositories.Implementations
             {
                 _context.Update(categorieTarif);
                 _context.SaveChanges();
-
+                return categorieTarif;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return categorieTarif;
+            
         }
 
-        //public CategorieTarif GetByClient(int id)
-        //{
-        //    var res = new CategorieTarif();
-        //    try
-        //    {
-        //        using (var db = new XSoftContext())
-        //        {
-        //            var result = db.Clients.Where(r => r.CategorieTarifId.Equals(id)).FirstOrDefault();
-
-
-        //        }
-
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-
-        //    }
-        //    return res;
-        //}
+        public Client GetByClient(int id)
+        {           
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                     var client = _context.Clients.FirstOrDefault(r => r.CategorieTarifId.Equals(id));
+                    return client;
+                }               
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+        }
 
 
     }

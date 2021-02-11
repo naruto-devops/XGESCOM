@@ -13,46 +13,141 @@ namespace Services.Implementations
 
         public UtilisateurServices(IUtilisateurRepository uti)
         {
-            _UtilisateurRepository = uti;
+            try
+            {
+                _UtilisateurRepository = uti;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public bool CheckUser_ExistCollaborateur(int id)
-        {
-            //var uti = _UtilisateurRepository.GetByClient(id);
-            //return uti != null;
-            return true;
-        }
+       
 
         public List<Utilisateur> GetAll()
         {
             List<Utilisateur> result = new List<Utilisateur>();
-            result = _UtilisateurRepository.GetAll();
-            return result;
+            try
+            {
+                result = _UtilisateurRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Utilisateur GetById(int id)
         {
-            return _UtilisateurRepository.GetById(id);
+            Utilisateur result = new Utilisateur();
+
+
+            try
+            {
+                result = _UtilisateurRepository.GetById(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Utilisateur Add(Utilisateur uti)
         {
-            _UtilisateurRepository.Add(uti);
+            try
+            {
+                _UtilisateurRepository.Add(uti);
+                return uti;
+            }
+            catch (Exception ex)
+            {
 
-            return uti;
+                throw ex;
+            }
 
         }
 
         public Utilisateur Update(Utilisateur uti)
         {
-            _UtilisateurRepository.Update(uti);
-            return uti;
+            try
+            {
+                _UtilisateurRepository.Update(uti);
+                return uti;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            return _UtilisateurRepository.Delete(id);
+            var userCreateur = CheckCreator_ExistClient(id);
+            var userModificateur = CheckModificator_ExistClient(id);
+            var UserCollaborateur = CheckUser_ExistCollaborateur(id);
+
+            var result = false;
+            if ((UserCollaborateur == null)&&((userCreateur==null)&&(userModificateur==null)))
+            {
+                result = true;
+                _UtilisateurRepository.Delete(id);
+            }
+            
+            return result;
+           
 
         }
+        public Collaborateur CheckUser_ExistCollaborateur(int id)
+        {
+            Collaborateur result = new Collaborateur();
+            try
+            {
+                result = _UtilisateurRepository.GetUserByCollaborator(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public Client CheckCreator_ExistClient(int id)
+        {
+            Client result = new Client ();
+            try
+            {
+               result=  _UtilisateurRepository.GetCreatorByClient(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public Client CheckModificator_ExistClient(int id)
+        {
+            Client result = new Client();
+            try
+            {
+                result = _UtilisateurRepository.GetModificatorByClient(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+      
     }
 }

@@ -20,9 +20,11 @@ namespace Models.Models
         public string    EMail { get; set; }
         public string    Matricule { get; set; }
         public int      Type { get; set; }
-
+        public bool Deleted { get; set; }
 
         public virtual IEnumerable<Client> Clients { get; set; }
-        public virtual IEnumerable<Utilisateur> Utilisateurs { get; set; }
+        public Utilisateur Utilisateur { get; set; }
+        public int? UtilisateurId { get; set; }
+       
     }
 }

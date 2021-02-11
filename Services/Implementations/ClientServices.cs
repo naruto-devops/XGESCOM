@@ -14,30 +14,14 @@ namespace Services
         IClientRepository _ClientRepository;
 
         IParametresService _parametresService;
-
         public ClientServices(IClientRepository client, IParametresService parametres)
-        {
-            _ClientRepository = client;
+      
+        {   _ClientRepository = client;
 
             _parametresService = parametres;
         }
 
-        //public bool CheckUnicCodification(string code)
-        //{
-        //    List<Client> _listeClient = new List<Client>();
-        //    _listeClient = _ClientRepository.GetAll();
-        //    var res = false;
-        //   foreach (Client client in _listeClient)
-        //    {
-        //        if (client.Intitule == code)
-        //        {
-        //            res = true;
-        //            break;
-        //        }                    
-        //    }
-
-        //    return res;
-        //}
+     
 
         public List<Client> GetAll()
         {
@@ -54,37 +38,41 @@ namespace Services
         public Client Add(Client client)
         {
             Client result = new Client();
-            result = _ClientRepository.Add(client);
+            Parametres parametres = _parametresService.GetAll();
+
+   
+           
+            if (!parametres.INCCLI)
+            {
+                if (!(CheckUnicCodification(client.Numero)))
+                {
+                    _ClientRepository.Add(client);
+                    result = client;
+                }
+                else
+                {
+                    result = null;
+                }
+
+            }
+            else 
+            {
+                
+
+                client.Numero = parametres.NUMCLI;
+                while (CheckUnicCodification(client.Numero))
+                {
+                    client.Numero = client.Numero.IncrementCode();
+
+                }
+               
+                result = _ClientRepository.Add(client);
+                parametres.NUMCLI = client.Numero;
+                _parametresService.Update(parametres);
+
+
+            }
             return result;
-            //var codification = _parametresService.Check_IncrementCodification();
-            //if (codification == 0)
-            //{
-            //    if (!CheckUnicCodification(client.Codification))
-            //    {
-            //        _ClientRepository.Add(client);
-            //        result = client;
-
-            //    }
-            //    else
-            //    {
-            //        result = null;
-            //    }
-
-            //}
-            //else if (codification == 1)  
-            //{
-            //    Parametres parametre = _parametresService.GetAll();
-            //    string codeClient = parametre.NUMCLI;
-
-            //    client.Codification = codeClient.IncrementCode();
-            //    result = _ClientRepository.Add(client);
-            //    parametre.NUMCLI = client.Codification;
-            //    _parametresService.UpdateNUMCLI(codeClient);
-            //}
-
-            //return result;
-            
-
         }
 
         public Client Update( Client client)
@@ -99,6 +87,11 @@ namespace Services
 
         }
 
+
+        public bool CheckUnicCodification(string numero)
+        {
+            return _ClientRepository.CheckUnicCodification(numero);
+        }
         //public bool CheckClient_ExistDocLig( int id)
         //{
         //    var result = _ClientRepository.GetByDocLig(id);

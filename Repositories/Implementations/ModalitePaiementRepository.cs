@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Models;
 using Models.Data;
+using Models.Models;
 using Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -27,14 +28,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.ModalitePaiements.ToList();
-
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+            
         }
 
 
@@ -45,47 +46,25 @@ namespace Repositories.Implementations
                 var res = _context.ModalitePaiements.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
-        //public ModalitePaiement GetByClient(int id)
-        //{
-        //    var res = new ModalitePaiement();
-        //    try
-        //    {
-        //        using (var db = new XSoftContext())
-        //        {
-        //            var result = db.Clients.Where(r => r.ModalitePaiementId.Equals(id)).FirstOrDefault();
-
-
-        //        }
-
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-
-        //    }
-        //    return res;
-        //}
-
-        public ModalitePaiement Add(ModalitePaiement dvs)
+        public ModalitePaiement Add(ModalitePaiement modalite)
         {
             try
             {
-                _context.ModalitePaiements.Add(dvs);
+                _context.ModalitePaiements.Add(modalite);
                 _context.SaveChanges();
-
+                return modalite;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+               throw ex;
             }
-            return dvs;
+            
         }
 
         public bool Delete(int id)
@@ -94,22 +73,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.ModalitePaiements.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.ModalitePaiements.Remove(res);
+                    _context.ModalitePaiements.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public ModalitePaiement Update(ModalitePaiement ModalitePaiement)
@@ -119,14 +100,31 @@ namespace Repositories.Implementations
             {
                 _context.Update(ModalitePaiement);
                 _context.SaveChanges();
-
+                return ModalitePaiement;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return ModalitePaiement;
+           
+        }
+
+        public Client GetByClient(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var client = _context.Clients.FirstOrDefault(r => r.ModalitePaiementId.Equals(id));
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

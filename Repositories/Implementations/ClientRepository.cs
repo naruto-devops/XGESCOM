@@ -25,15 +25,16 @@ namespace Repositories.Implementations
             var res = new List<Client>();
             try
             {
-                res = _context.Clients.ToList();
+                res = _context.Clients.Where(a => a.Deleted == false).ToList();
+                return res;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+            
         }
 
         public Client GetById(int id)
@@ -43,9 +44,9 @@ namespace Repositories.Implementations
                 var res = _context.Clients.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -55,13 +56,14 @@ namespace Repositories.Implementations
             {
                 _context.Clients.Add(Client);
                 _context.SaveChanges();
+                return Client;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
-            return Client;
+           
         }
 
         public bool Delete(int id)
@@ -69,23 +71,29 @@ namespace Repositories.Implementations
 
             try
             {
+
+
+
                 var res = _context.Clients.FirstOrDefault(r => r.ID.Equals(id));
+                
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.Clients.Remove(res);
+                    _context.Clients.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public Client Update(Client Client)
@@ -95,15 +103,23 @@ namespace Repositories.Implementations
             {
                 _context.Update(Client);
                 _context.SaveChanges();
-
+                return Client;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return Client;
+            
         }
 
+
+        public bool CheckUnicCodification(string numero)
+        {
+                return _context.Clients.Where(s => s.Numero.Equals(numero)).Any();
+           
+
+            
+        }
     }
 }

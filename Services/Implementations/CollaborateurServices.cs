@@ -16,41 +16,110 @@ namespace Services
             _CollaborateurRepository = collaborateur;
         }
 
-        public bool CheckCol_ExistClient(int id)
+
+        public Client CheckCollaborateur_ExistClient(int id)
         {
-            //var collaborateur = _CollaborateurRepository.GetByClient(id);
-            //return collaborateur != null;
-            return true;
+            try
+            {
+                return _CollaborateurRepository.GetByClient(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+
+        public Collaborateur CheckUser_ExistCollaborateur(int id)
+        {
+
+            Collaborateur result = new Collaborateur();
+            try
+            {
+                result = _CollaborateurRepository.GetUserByCollaborator(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public  List<Collaborateur> GetAll()
         {
             List<Collaborateur> result = new List<Collaborateur>();
-            result = _CollaborateurRepository.GetAll();
-                return result;       
+            try
+            {
+                result = _CollaborateurRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }       
         }
        public  Collaborateur GetById(int id)
         {
-            return _CollaborateurRepository.GetById(id);
+            try
+            {
+                return _CollaborateurRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public Collaborateur Add(Collaborateur collaborateur)
         {
-            _CollaborateurRepository.Add(collaborateur);
+            try
+            {
+                _CollaborateurRepository.Add(collaborateur);
 
-            return collaborateur;
+                return collaborateur;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
            
         }
 
         public Collaborateur Update(Collaborateur collaborateur)
         {
-            _CollaborateurRepository.Update(collaborateur);
-            return collaborateur;
+            try
+            {
+
+                _CollaborateurRepository.Update(collaborateur);
+                return collaborateur;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-           return  _CollaborateurRepository.Delete(id);
+            try
+            {
+                return _CollaborateurRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
            
         }
     }

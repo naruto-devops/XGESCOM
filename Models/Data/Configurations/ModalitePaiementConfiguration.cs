@@ -16,6 +16,7 @@ namespace Models.Data.Configurations
             builder.HasIndex(e => e.Code)
                    .HasName("UnicityCode").IsUnique();
 
+            builder.Property(s => s.Deleted).HasDefaultValue(false);
 
         }
     }

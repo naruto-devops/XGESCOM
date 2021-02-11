@@ -29,14 +29,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.Devises.ToList();
-
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+           
         }
 
 
@@ -47,47 +47,25 @@ namespace Repositories.Implementations
                 var res = _context.Devises.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-                return null;
+                throw ex;
             }
         }
 
-        //public Devise GetByClient(int id)
-        //{
-        //    var res = new Devise();
-        //    try
-        //    {
-        //        using (var db = new XSoftContext())
-        //        {
-        //            var result = db.Clients.Where(r => r.DeviseId.Equals(id)).FirstOrDefault();
-
-
-        //        }
-
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-
-        //    }
-        //    return res;
-        //}
-
-        public Devise Add(Devise dvs)
+        public Devise Add(Devise devise)
         {
             try
             {
-                _context.Devises.Add(dvs);
+                _context.Devises.Add(devise);
                 _context.SaveChanges();
-
+                return devise;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
-            return dvs;
+           
         }
 
         public bool Delete(int id)
@@ -96,22 +74,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.Devises.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.Devises.Remove(res);
+                    _context.Devises.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public Devise Update(Devise devise)
@@ -121,14 +101,31 @@ namespace Repositories.Implementations
             {
                 _context.Update(devise);
                 _context.SaveChanges();
-
+                return devise;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return devise;
+           
+        }
+
+        public Client GetByClient(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var client = _context.Clients.FirstOrDefault(r => r.DeviseId.Equals(id));
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

@@ -11,8 +11,11 @@ namespace Services.Contracts
         Collaborateur GetById(int id);
         Collaborateur Add(Collaborateur cbl);
         Collaborateur Update(Collaborateur cbl);
+
+        Collaborateur CheckUser_ExistCollaborateur(int id);
+
         
-        bool CheckCol_ExistClient(int id);
+        Client CheckCollaborateur_ExistClient(int id);
         bool Delete(int id);
     }
 }

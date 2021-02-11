@@ -52,15 +52,10 @@ namespace XSOFT_WEB.Controllers
         [HttpDelete("Delete/{id}")]
         public bool Delete(int id)
         {
-            bool res = false;
-
-            if (_ContactService.CheckContact_ExistClient(id) == false)
-            {
-                _ContactService.Delete(id);
-                res = true;
-            }
-
-            return res;
+           
+              return  _ContactService.Delete(id);
+           
+          
 
         }
     }

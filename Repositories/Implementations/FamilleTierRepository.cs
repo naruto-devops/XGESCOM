@@ -28,14 +28,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.FamilleTiers.ToList();
-
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+            
         }
 
 
@@ -46,47 +46,25 @@ namespace Repositories.Implementations
                 var res = _context.FamilleTiers.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
-        //public FamilleTier GetByClient(int id)
-        //{
-        //    var res = new FamilleTier();
-        //    try
-        //    {
-        //        using (var db = new XSoftContext())
-        //        {
-        //            var result = db.Clients.Where(r => r.FamilleTierId.Equals(id)).FirstOrDefault();
-
-
-        //        }
-
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-
-        //    }
-        //    return res;
-        //}
-
-        public FamilleTier Add(FamilleTier dvs)
+        public FamilleTier Add(FamilleTier famille)
         {
             try
             {
-                _context.FamilleTiers.Add(dvs);
+                _context.FamilleTiers.Add(famille);
                 _context.SaveChanges();
-
+                return famille;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
-            return dvs;
+           
         }
 
         public bool Delete(int id)
@@ -95,22 +73,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.FamilleTiers.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.FamilleTiers.Remove(res);
+                    _context.FamilleTiers.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public FamilleTier Update(FamilleTier FamilleTier)
@@ -120,14 +100,32 @@ namespace Repositories.Implementations
             {
                 _context.Update(FamilleTier);
                 _context.SaveChanges();
+                return FamilleTier;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return FamilleTier;
+          
+        }
+
+        public Client GetByClient(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var client = _context.Clients.FirstOrDefault(r => r.FamilleTierId.Equals(id));
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

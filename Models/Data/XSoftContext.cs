@@ -25,6 +25,8 @@ namespace Models.Data
         public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<ModalitePaiement> ModalitePaiements { get; set; }
+       public virtual DbSet<Parametres> Parametres { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,6 +53,8 @@ namespace Models.Data
             modelBuilder.ApplyConfiguration(new CollaborateurConfiguration());
             modelBuilder.ApplyConfiguration(new ContactConfiguration());
             modelBuilder.ApplyConfiguration(new ModalitePaiementConfiguration());
+            modelBuilder.ApplyConfiguration(new ParametresConfiguration());
+
         }
     }
 }

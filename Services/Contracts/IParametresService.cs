@@ -6,10 +6,13 @@ using System.Text;
 namespace Services.Contracts
 {
     public interface IParametresService
-    {   Parametres GetAll();
+    {
+        Parametres GetAll();
         Parametres Update(Parametres parametre);
-        int Check_IncrementCodification();
+      
         bool UpdateNUMCLI(string numcli);
-        
+        string GetNumeroClient();
+        bool GetIncrementClient();
+        string GetClientGeneral();
     }
 }

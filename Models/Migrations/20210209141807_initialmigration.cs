@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Models.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,106 @@ namespace Models.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Categorie = table.Column<string>(maxLength: 12, nullable: true),
-                    PrixTTC = table.Column<int>(nullable: false)
+                    PrixTTC = table.Column<bool>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CategorieTarifs", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Devises",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DEVISE = table.Column<string>(maxLength: 12, nullable: true),
+                    CODEISO = table.Column<string>(maxLength: 12, nullable: true),
+                    CODEBANQUE = table.Column<string>(maxLength: 12, nullable: true),
+                    LIBELLE = table.Column<string>(maxLength: 50, nullable: true),
+                    SYMBOLE = table.Column<string>(maxLength: 12, nullable: true),
+                    DECIMALE = table.Column<int>(maxLength: 1, nullable: false),
+                    COURS = table.Column<double>(maxLength: 18, nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Devises", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModalitePaiements",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Intitule = table.Column<string>(maxLength: 45, nullable: true),
+                    Code = table.Column<string>(maxLength: 6, nullable: true),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModalitePaiements", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parametres",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    INCFRS = table.Column<bool>(nullable: false, defaultValue: false),
+                    INCCLI = table.Column<bool>(nullable: false, defaultValue: false),
+                    NUMFRS = table.Column<string>(maxLength: 17, nullable: true),
+                    NUMCLI = table.Column<string>(maxLength: 17, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parametres", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Utilisateurs",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    User = table.Column<string>(maxLength: 12, nullable: true),
+                    ModePasse = table.Column<string>(maxLength: 12, nullable: true),
+                    C_ModePasse = table.Column<string>(maxLength: 12, nullable: true),
+                    Description = table.Column<string>(maxLength: 50, nullable: true),
+                    Droit = table.Column<int>(nullable: false),
+                    Date_connexion = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Utilisateurs", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FamilleTiers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<string>(maxLength: 19, nullable: true),
+                    Libelle = table.Column<string>(maxLength: 19, nullable: true),
+                    Exonere = table.Column<bool>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    CategorieTarifId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamilleTiers", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FamilleTiers_CategorieTarifs_CategorieTarifId",
+                        column: x => x.CategorieTarifId,
+                        principalTable: "CategorieTarifs",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,90 +133,17 @@ namespace Models.Migrations
                     Telephone = table.Column<string>(maxLength: 21, nullable: true),
                     EMail = table.Column<string>(maxLength: 69, nullable: true),
                     Matricule = table.Column<string>(maxLength: 11, nullable: true),
-                    Type = table.Column<int>(nullable: false)
+                    Type = table.Column<int>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    UtilisateurId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collaborateurs", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Devises",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DEVISE = table.Column<string>(maxLength: 12, nullable: true),
-                    CODEISO = table.Column<string>(maxLength: 12, nullable: true),
-                    CODEBANQUE = table.Column<string>(maxLength: 12, nullable: true),
-                    LIBELLE = table.Column<string>(maxLength: 50, nullable: true),
-                    SYMBOLE = table.Column<string>(maxLength: 12, nullable: true),
-                    DECIMALE = table.Column<int>(maxLength: 1, nullable: false),
-                    COURS = table.Column<double>(maxLength: 18, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Devises", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ModalitePaiement",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Intitule = table.Column<string>(nullable: true),
-                    Code = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModalitePaiement", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FamilleTiers",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(maxLength: 19, nullable: true),
-                    Libelle = table.Column<string>(maxLength: 19, nullable: true),
-                    Exonere = table.Column<int>(nullable: false),
-                    CategorieTarifId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FamilleTiers", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_FamilleTiers_CategorieTarifs_CategorieTarifId",
-                        column: x => x.CategorieTarifId,
-                        principalTable: "CategorieTarifs",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Utilisateur",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    User = table.Column<string>(maxLength: 12, nullable: true),
-                    ModePasse = table.Column<string>(maxLength: 12, nullable: true),
-                    C_ModePasse = table.Column<string>(maxLength: 12, nullable: true),
-                    Description = table.Column<string>(maxLength: 50, nullable: true),
-                    Droit = table.Column<int>(nullable: false),
-                    Date_connexion = table.Column<DateTime>(nullable: false),
-                    CollaborateurId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Utilisateur", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Utilisateur_Collaborateurs_CollaborateurId",
-                        column: x => x.CollaborateurId,
-                        principalTable: "Collaborateurs",
+                        name: "FK_Collaborateurs_Utilisateurs_UtilisateurId",
+                        column: x => x.UtilisateurId,
+                        principalTable: "Utilisateurs",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -132,7 +154,7 @@ namespace Models.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Codification = table.Column<string>(maxLength: 17, nullable: true),
+                    Numero = table.Column<string>(maxLength: 17, nullable: true),
                     Intitule = table.Column<string>(maxLength: 35, nullable: true),
                     Type = table.Column<int>(nullable: false),
                     NumeroPrincipale = table.Column<string>(maxLength: 13, nullable: true),
@@ -149,19 +171,20 @@ namespace Models.Migrations
                     Siret = table.Column<string>(maxLength: 15, nullable: true),
                     Encours = table.Column<double>(maxLength: 24, nullable: false),
                     NumeroPayeur = table.Column<string>(maxLength: 17, nullable: true),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false),
                     CategorieComptabilite = table.Column<int>(nullable: false),
                     DateCreation = table.Column<DateTime>(nullable: false),
-                    Sommeil = table.Column<int>(nullable: false),
+                    Sommeil = table.Column<bool>(nullable: false),
                     Depot = table.Column<int>(nullable: false),
                     Telephone = table.Column<string>(maxLength: 21, nullable: true),
                     Telecopie = table.Column<string>(maxLength: 21, nullable: true),
                     EMail = table.Column<string>(maxLength: 69, nullable: true),
                     SiteWeb = table.Column<string>(maxLength: 69, nullable: true),
-                    Timbre = table.Column<string>(maxLength: 21, nullable: true),
+                    Timbre = table.Column<bool>(nullable: false),
                     TauxRemise = table.Column<double>(maxLength: 18, nullable: false),
                     CategorieTVA = table.Column<string>(maxLength: 7, nullable: true),
                     Categorie = table.Column<string>(maxLength: 7, nullable: true),
-                    Etranger = table.Column<int>(nullable: false),
+                    Etranger = table.Column<bool>(nullable: false),
                     CoursDevise = table.Column<double>(maxLength: 18, nullable: false),
                     ADRESSELivraison = table.Column<string>(maxLength: 70, nullable: true),
                     CodePostalLivraison = table.Column<string>(maxLength: 10, nullable: true),
@@ -188,9 +211,9 @@ namespace Models.Migrations
                 {
                     table.PrimaryKey("PK_Clients", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Clients_Utilisateur_CREATEURId",
+                        name: "FK_Clients_Utilisateurs_CREATEURId",
                         column: x => x.CREATEURId,
-                        principalTable: "Utilisateur",
+                        principalTable: "Utilisateurs",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -218,21 +241,21 @@ namespace Models.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Clients_Utilisateur_MODIFICATEURId",
+                        name: "FK_Clients_Utilisateurs_MODIFICATEURId",
                         column: x => x.MODIFICATEURId,
-                        principalTable: "Utilisateur",
+                        principalTable: "Utilisateurs",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Clients_ModalitePaiement_ModalitePaiementId",
+                        name: "FK_Clients_ModalitePaiements_ModalitePaiementId",
                         column: x => x.ModalitePaiementId,
-                        principalTable: "ModalitePaiement",
+                        principalTable: "ModalitePaiements",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contact",
+                name: "Contacts",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -248,14 +271,15 @@ namespace Models.Migrations
                     Fax = table.Column<string>(maxLength: 35, nullable: true),
                     Email = table.Column<string>(maxLength: 35, nullable: true),
                     Type = table.Column<int>(maxLength: 1, nullable: false),
+                    Deleted = table.Column<bool>(nullable: false, defaultValue: false),
                     ClientID = table.Column<int>(nullable: true),
                     ClienttId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.ID);
+                    table.PrimaryKey("PK_Contacts", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Contact_Clients_ClientID",
+                        name: "FK_Contacts_Clients_ClientID",
                         column: x => x.ClientID,
                         principalTable: "Clients",
                         principalColumn: "ID",
@@ -305,8 +329,13 @@ namespace Models.Migrations
                 column: "ModalitePaiementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contact_ClientID",
-                table: "Contact",
+                name: "IX_Collaborateurs_UtilisateurId",
+                table: "Collaborateurs",
+                column: "UtilisateurId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_ClientID",
+                table: "Contacts",
                 column: "ClientID");
 
             migrationBuilder.CreateIndex(
@@ -329,13 +358,15 @@ namespace Models.Migrations
                 filter: "[Code] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Utilisateur_CollaborateurId",
-                table: "Utilisateur",
-                column: "CollaborateurId");
+                name: "UnicityCode",
+                table: "ModalitePaiements",
+                column: "Code",
+                unique: true,
+                filter: "[Code] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UnicityNomUtilisateur",
-                table: "Utilisateur",
+                table: "Utilisateurs",
                 column: "User",
                 unique: true,
                 filter: "[User] IS NOT NULL");
@@ -344,13 +375,16 @@ namespace Models.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contact");
+                name: "Contacts");
+
+            migrationBuilder.DropTable(
+                name: "Parametres");
 
             migrationBuilder.DropTable(
                 name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Utilisateur");
+                name: "Collaborateurs");
 
             migrationBuilder.DropTable(
                 name: "Devises");
@@ -359,10 +393,10 @@ namespace Models.Migrations
                 name: "FamilleTiers");
 
             migrationBuilder.DropTable(
-                name: "ModalitePaiement");
+                name: "ModalitePaiements");
 
             migrationBuilder.DropTable(
-                name: "Collaborateurs");
+                name: "Utilisateurs");
 
             migrationBuilder.DropTable(
                 name: "CategorieTarifs");

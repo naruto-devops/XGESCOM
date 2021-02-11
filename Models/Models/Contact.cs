@@ -19,7 +19,7 @@ namespace Models.Models
         public string Fax { get; set; }
         public string Email { get; set; }
         public int Type { get; set; }
-
+        public bool Deleted { get; set; }
         //--LinkClients
         public Client Client { get; set; }
         public int? ClienttId { get; set; }

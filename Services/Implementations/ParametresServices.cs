@@ -12,7 +12,7 @@ namespace Services.Implementations
     public class ParametresServices : IParametresService
     {
         IParametresRepository _ParametresRepository;
-       
+
 
         public ParametresServices(IParametresRepository parametres)
         {
@@ -22,28 +22,78 @@ namespace Services.Implementations
 
         public Parametres GetAll()
         {
-            return _ParametresRepository.GetAll();
-        }
+            try
+            {
+                return _ParametresRepository.GetAll();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }  
 
         public Parametres Update(Parametres parametres)
         {
-            _ParametresRepository.Update(parametres);
-            return parametres;
+            try
+            {
+                _ParametresRepository.Update(parametres);
+                return parametres;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
-        public int Check_IncrementCodification()
+        public bool GetIncrementClient()
         {
-            Parametres resultParametre = new Parametres();
-            resultParametre = _ParametresRepository.GetAll();
-            return resultParametre.INCCLI;
+            try
+            {
+                return _ParametresRepository.GetIncrClient();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
 
+        public string GetNumeroClient()
+        {
+            try
+            {
+                return _ParametresRepository.GetNumClient();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public string GetClientGeneral()
+        {
+            try
+            {
+                return _ParametresRepository.GetClientGeneral();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public bool UpdateNUMCLI(string numcli)
         {
             try
             {
+                numcli.IncrementCode();
                 _ParametresRepository.UpdateNUMCLI(numcli);
 
             }

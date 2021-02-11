@@ -12,8 +12,8 @@ namespace Models.Models
         public int ID { get; set; }
         public string Code { get; set; }
         public string Libelle { get; set; }
-        public int   Exonere { get; set; }
-
+        public bool   Exonere { get; set; }
+        public bool Deleted { get; set; }
         public virtual IEnumerable<Client> Clients { get; set; }
 
         //categorieTarif -- link---

@@ -54,15 +54,9 @@ namespace XSOFT_WEB.Controllers
         {
 
             bool res = false;
+             var result = _UtilisateurService.Delete(id);
 
-            if (_UtilisateurService.CheckUser_ExistCollaborateur(id) == false)
-            {
-                _UtilisateurService.Delete(id);
-                res = true;
-
-            }
-
-            return res;
+            return  res;
 
         }
     }

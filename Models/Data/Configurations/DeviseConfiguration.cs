@@ -22,6 +22,7 @@ namespace Models.Data.Configurations
             builder.Property(s => s.DECIMALE).HasMaxLength(1);
             builder.Property(s => s.COURS).HasMaxLength(18);
 
+            builder.Property(s => s.Deleted).HasDefaultValue(false);
 
         }
     }
