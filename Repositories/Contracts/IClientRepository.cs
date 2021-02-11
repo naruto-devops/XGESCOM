@@ -11,7 +11,7 @@ namespace Repositories.Contracts
         Client GetById(int id);
         Client Add(Client client);
         Client Update(Client client);
-       
+        bool CheckUnicCodification(string numero);
         bool Delete(int id);
         //FamilleTier GetFamilleTier(int id);
         //Client GetByDocLig(int id);

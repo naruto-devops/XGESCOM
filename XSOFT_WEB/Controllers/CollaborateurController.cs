@@ -55,12 +55,16 @@ namespace XSOFT_WEB.Controllers
         {
             bool res = false;
 
-            if (_collaborateurService.CheckCol_ExistClient(id)==false)
-            { _collaborateurService.Delete(id);
+            if (_collaborateurService.CheckCollaborateur_ExistClient(id) == null)
+            {
+                _collaborateurService.Delete(id);
                 res = true;
+
             }
-           
+
             return res;
+
+
 
         }
     }

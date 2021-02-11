@@ -9,7 +9,7 @@ namespace Repositories.Contracts
     {
         List<CategorieTarif> GetAll();
         CategorieTarif GetById(int id);
-        //CategorieTarif GetByClient(int id);
+        Client GetByClient(int id);
         CategorieTarif Add(CategorieTarif categorie);
         CategorieTarif Update(CategorieTarif categorie);
         bool Delete(int id);

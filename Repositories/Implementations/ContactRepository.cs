@@ -27,14 +27,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.Contacts.ToList();
-
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+           
         }
 
         public Contact GetById(int id)
@@ -44,9 +44,9 @@ namespace Repositories.Implementations
                 var res = _context.Contacts.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -56,13 +56,13 @@ namespace Repositories.Implementations
             {
                 _context.Contacts.Add(contact);
                 _context.SaveChanges();
-
+                return contact;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
-            return contact;
+            
         }
 
         public bool Delete(int id)
@@ -75,18 +75,19 @@ namespace Repositories.Implementations
                 {
                     _context.Contacts.Remove(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+            
         }
 
         public Contact Update(Contact contact)
@@ -96,14 +97,14 @@ namespace Repositories.Implementations
             {
                 _context.Update(contact);
                 _context.SaveChanges();
-
+                return contact;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return contact;
+            
         }
     }
 }

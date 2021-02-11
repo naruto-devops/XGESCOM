@@ -9,7 +9,7 @@ namespace Repositories.Contracts
     {
         List<Devise> GetAll();
         Devise GetById(int id);
-       // Devise GetByClient(int id);
+       Client GetByClient(int id);
         Devise Add(Devise devise);
         Devise Update(Devise devise);
         bool Delete(int id);

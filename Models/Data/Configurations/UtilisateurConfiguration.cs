@@ -17,9 +17,7 @@ namespace Models.Data.Configurations
             builder.Property(s => s.ModePasse).HasMaxLength(12);
             builder.Property(s => s.C_ModePasse).HasMaxLength(12);
             builder.Property(s => s.Description).HasMaxLength(50);
-           
-        
-
+            builder.Property(s => s.Deleted).HasDefaultValue(false);
 
         }
  

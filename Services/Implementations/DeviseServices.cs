@@ -12,47 +12,99 @@ namespace Services.Implementations
 
         IDeviseRepository _DeviseRepository;
 
+        
+
+        public List<Devise> GetAll()
+        {
+            List<Devise> result = new List<Devise>();
+            try
+            {
+                result = _DeviseRepository.GetAll();
+                return result;
+            } 
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public Devise GetById(int id)
+        {
+            try
+            {
+                var res = _DeviseRepository.GetById(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+       
+        }
+
+        public Devise Add(Devise devise)
+        {
+            try
+            {
+                _DeviseRepository.Add(devise);
+                return devise;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public Devise Update(Devise devise)
+        {
+            try
+            {
+                _DeviseRepository.Update(devise);
+                return devise;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                return _DeviseRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
         public DeviseServices(IDeviseRepository dvs)
         {
             _DeviseRepository = dvs;
         }
 
-        //public bool CheckDev_ExistClient(int id)
-        //{
-        //    var dvs = _DeviseRepository.GetByClient(id);
-        //    return dvs != null;
-        //}
 
-        public List<Devise> GetAll()
+        public Client CheckDevise_ExistClient(int id)
         {
-            List<Devise> result = new List<Devise>();
-            result = _DeviseRepository.GetAll();
-            return result;
-        }
+            try
+            {
+                return _DeviseRepository.GetByClient(id);
+            }
+            catch (Exception ex)
+            {
 
-        public Devise GetById(int id)
-        {
-            var res = _DeviseRepository.GetById(id);
-            return res;
-        }
+                throw ex;
+            }
 
-        public Devise Add(Devise dvs)
-        {
-            _DeviseRepository.Add(dvs);
 
-            return dvs;
-
-        }
-
-        public Devise Update(Devise dvs)
-        {
-            _DeviseRepository.Update(dvs);
-            return dvs;
-        }
-
-        public bool Delete(int id)
-        {
-            return _DeviseRepository.Delete(id);
 
         }
     }

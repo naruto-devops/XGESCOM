@@ -14,7 +14,7 @@ namespace Models.Models
         public string Description { get; set; }
         public int Droit { get; set; }
         public DateTime Date_connexion { get; set; }
-
+        public bool Deleted { get; set; }
 
 
         //--Linkclient
@@ -22,7 +22,6 @@ namespace Models.Models
         public virtual IEnumerable<Client> ClientCrees { get; set; }
 
         //--LinkCollaborateur
-        public Collaborateur Collaborateur { get; set; }
-        public int? CollaborateurId { get; set; }
+        public virtual IEnumerable<Collaborateur> Collaborateurs { get; set; }
     }
 }

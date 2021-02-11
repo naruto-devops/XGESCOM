@@ -68,6 +68,7 @@ namespace XSOFT_WEB.Controllers
 
             //if (_clientService.CheckClient_ExistDocLig(id) == false)
             //{
+            
                 _clientService.Delete(id);
                 res = true;
 

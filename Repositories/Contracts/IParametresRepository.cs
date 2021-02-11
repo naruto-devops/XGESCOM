@@ -5,11 +5,14 @@ using System.Text;
 
 namespace Repositories.Contracts
 {
-   public  interface IParametresRepository
+    public interface IParametresRepository
     {
-     Parametres GetAll();
-     Parametres Update(Parametres parametres);
-     bool UpdateNUMCLI(string numcli);
-            
+        Parametres GetAll();
+        Parametres Update(Parametres parametres);
+        bool UpdateNUMCLI(string numcli);
+        string GetNumClient();
+        string GetClientGeneral();
+        bool GetIncrClient();
+
     }
 }

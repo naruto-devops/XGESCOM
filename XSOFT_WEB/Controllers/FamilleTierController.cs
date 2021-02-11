@@ -55,7 +55,7 @@ namespace XSOFT_WEB.Controllers
         {
             bool res = false;
 
-            if (_FamilleTierService.CheckFAT_ExistClient(id)==false)
+            if (_FamilleTierService.CheckFamilleTier_ExistClient(id)==null)
             {
                 _FamilleTierService.Delete(id);
                 res = true;

@@ -23,17 +23,17 @@ namespace XSOFT_WEB.Controllers
         [HttpGet("Get")]
         public IActionResult GetAll()
         {
-          
-            var res=_ParametresService.GetAll();
+
+            var res = _ParametresService.GetAll();
             if (res != null)
                 return Ok(res);
             else
                 return NotFound();
 
         }
-        
-       
-       
+
+
+
         [HttpPut("Edit")]
         public Parametres Put([FromBody]Parametres parametre)
         {
@@ -44,6 +44,18 @@ namespace XSOFT_WEB.Controllers
             return parametre;
 
         }
-        
+
+
+        [HttpGet("GetClientGen")]
+        public IActionResult GetCltGen()
+        {
+
+            var res = _ParametresService.GetClientGeneral();
+            if (res != null)
+                return Ok(res);
+            else
+                return NotFound();
+
+        }
     }
 }

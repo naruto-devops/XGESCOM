@@ -9,7 +9,7 @@ namespace Models.Models
     {
         [Key]
         public int ID { get; set; }
-        public string Codification { get; set; }
+        public string Numero { get; set; }
         public string Intitule { get; set; }
         public int Type { get; set; }
         public string NumeroPrincipale { get; set; }
@@ -26,21 +26,21 @@ namespace Models.Models
         public string Siret { get; set; }
         public double Encours { get; set; }
         public string NumeroPayeur { get; set; }
-
+        public bool Deleted { get; set; }
         public int CategorieComptabilite { get; set; }
         public DateTime DateCreation { get; set; }
-        public int Sommeil { get; set; }
+        public bool Sommeil { get; set; }
         public int Depot { get; set; }
         public string Telephone { get; set; }
         public string Telecopie { get; set; }
         public string EMail { get; set; }
         public string SiteWeb { get; set; }
         
-        public string Timbre { get; set; }
+        public bool Timbre { get; set; }
         public double TauxRemise { get; set; }
         public string CategorieTVA { get; set; }
         public string Categorie { get; set; }
-        public int Etranger { get; set; }
+        public bool Etranger { get; set; }
       
         public double CoursDevise { get; set; }
         public string ADRESSELivraison { get; set; }
@@ -56,6 +56,7 @@ namespace Models.Models
         public string Incoterm { get; set; }
         public string CompteAuxiliaire { get; set; }
         public string ICE { get; set; }
+        
 
         //Utilisateur -- createur---
         public Utilisateur CREATEUR { get; set; }

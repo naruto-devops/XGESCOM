@@ -16,61 +16,71 @@ namespace XSOFT_WEB.Controllers
     {
         IDeviseService _DeviseService;
 
-        public DeviseController(IDeviseService dvs)
+        public DeviseController(IDeviseService devise)
         {
-            _DeviseService = dvs;
+            _DeviseService = devise;
         }
         [HttpGet("Get")]
         public List<Devise> GetAll()
         {
-            return _DeviseService.GetAll();
-
-        }
-        [HttpGet("Find/{id}")]
-        public ActionResult<Devise> GetById(int id)
-        {
-            var res = _DeviseService.GetById(id);
-            if (res is null)
-                return NotFound();
-            else
-                return Ok(res);
-
-        }
-        [HttpPost("Create")]
-        public Devise Post([FromBody]Devise devise)
-        {
-            Devise res = new Devise();
-            if (ModelState.IsValid)
-                                 res  =   _DeviseService.Add(devise);
+           var res= _DeviseService.GetAll();
             if (res is null)
                 return null;
             else
-            return devise;
+                return res;
+
+        }
+        [HttpGet("Find/{id}")]
+        public Devise GetById(int id)
+        {
+            try
+            {
+                var res = _DeviseService.GetById(id);
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+          
+            
+
+        }
+        [HttpPost("Create")]
+        public ActionResult<Devise> Post([FromBody]Devise devise)
+        {
+           
+            var res  =   _DeviseService.Add(devise);
+            if (res is null)
+                return BadRequest(); 
+            else
+                return devise;
         }
         [HttpPut("Edit")]
-        public Devise Put([FromBody]Devise dvs)
+        public ActionResult<Devise> Put([FromBody]Devise devise)
         {
+           var res = _DeviseService.Update(devise);
 
-
-            if (ModelState.IsValid)
-                _DeviseService.Update(dvs);
-            return dvs;
+            if (res is null)
+                return BadRequest(); 
+            else
+                return devise;
         }
         [HttpDelete("Delete/{id}")]
+
         public bool Delete(int id)
         {
-           
 
-            //  if (_DeviseService.CheckDev_ExistClient(id)==false)
-            //  {
-            
-                
-            
-           
-                return  _DeviseService.Delete(id);
-           
+            bool res = false;
 
+            if (_DeviseService.CheckDevise_ExistClient(id) == null)
+            {
+                _DeviseService.Delete(id);
+                res = true;
+            }
 
+            return res;
 
         }
     }

@@ -23,17 +23,18 @@ namespace Repositories.Implementations
         public List<Utilisateur> GetAll()
         {
             var res = new List<Utilisateur>();
-            try
+            try 
             {
                 res = _context.Utilisateurs.ToList();
+                return res;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
+
             }
 
-            return res;
         }
 
         public Utilisateur GetById(int id)
@@ -43,9 +44,9 @@ namespace Repositories.Implementations
                 var res = _context.Utilisateurs.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -55,13 +56,13 @@ namespace Repositories.Implementations
             {
                 _context.Utilisateurs.Add(Utilisateur);
                 _context.SaveChanges();
+                return Utilisateur;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
-            return Utilisateur;
         }
 
         public bool Delete(int id)
@@ -70,22 +71,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.Utilisateurs.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.Utilisateurs.Remove(res);
+                    _context.Utilisateurs.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
 
             }
-            return true;
+           
         }
 
         public Utilisateur Update(Utilisateur Utilisateur)
@@ -95,15 +98,67 @@ namespace Repositories.Implementations
             {
                 _context.Update(Utilisateur);
                 _context.SaveChanges();
-
+                return Utilisateur;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return Utilisateur;
+           
         }
-    
+
+        public Client GetCreatorByClient(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var res = db.Clients.Where(r => r.CREATEURId.Equals(id)).FirstOrDefault();
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+        public Client GetModificatorByClient(int id)
+        {
+           
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var res = db.Clients.Where(r => r.MODIFICATEURId.Equals(id)).FirstOrDefault();
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            
+        }
+
+       public Collaborateur GetUserByCollaborator(int id)
+        {
+
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var res = db.Collaborateurs.Where(r => r.UtilisateurId.Equals(id)).FirstOrDefault();
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
     }
 }

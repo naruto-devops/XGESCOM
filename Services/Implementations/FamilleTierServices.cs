@@ -16,42 +16,93 @@ namespace Services.Implementations
             _FamilleTierRepository = fat;
         }
 
-        public bool CheckFAT_ExistClient(int id)
-        {
-            //var fat = _FamilleTierRepository.GetByClient(id);
-            //return fat != null;
-            return true;
-        }
+      
 
         public List<FamilleTier> GetAll()
         {
             List<FamilleTier> result = new List<FamilleTier>();
-            result = _FamilleTierRepository.GetAll();
-            return result;
+            try
+            {
+                result = _FamilleTierRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public FamilleTier GetById(int id)
         {
-            return _FamilleTierRepository.GetById(id);
+            try
+            {
+                return _FamilleTierRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public FamilleTier Add(FamilleTier fat)
         {
-            _FamilleTierRepository.Add(fat);
+            try
+            {
+                _FamilleTierRepository.Add(fat);
 
-            return fat;
+                return fat;
 
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public FamilleTier Update(FamilleTier fat)
         {
-            _FamilleTierRepository.Update(fat);
-            return fat;
+            try
+            {
+                _FamilleTierRepository.Update(fat);
+                return fat;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            return _FamilleTierRepository.Delete(id);
+            try
+            {
+                return _FamilleTierRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        public Client CheckFamilleTier_ExistClient(int id)
+        {
+            try
+            {
+                return _FamilleTierRepository.GetByClient(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
 
         }
     }

@@ -17,42 +17,91 @@ namespace Services.Implementations
             _CategorieTarifRepository = categorie;
         }
 
-        public bool CheckCategorie_ExistClient(int id)
+        public Client CheckCategorie_ExistClient(int id)
         {
-            //var fat = _CategorieTarifRepository.GetByClient(id);
-            //return fat != null;
-            return true;
+            try
+            {
+                return _CategorieTarifRepository.GetByClient(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+            
+            
         }
 
         public List<CategorieTarif> GetAll()
         {
             List<CategorieTarif> result = new List<CategorieTarif>();
-            result = _CategorieTarifRepository.GetAll();
-            return result;
+
+            try
+            {
+                result = _CategorieTarifRepository.GetAll();
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public CategorieTarif GetById(int id)
         {
-            return _CategorieTarifRepository.GetById(id);
+            try
+            {
+                return _CategorieTarifRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public CategorieTarif Add(CategorieTarif categorie)
         {
-            _CategorieTarifRepository.Add(categorie);
+            try
+            {
+                var res = _CategorieTarifRepository.Add(categorie);
+                return categorie;
+            }
+            catch (Exception ex)
+            {
 
-            return categorie;
+                throw ex;
+            }
 
         }
 
         public CategorieTarif Update(CategorieTarif categorie)
         {
-            _CategorieTarifRepository.Update(categorie);
-            return categorie;
+            try
+            {
+                _CategorieTarifRepository.Update(categorie);
+                return categorie;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            return _CategorieTarifRepository.Delete(id);
+            try
+            {
+                return _CategorieTarifRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }

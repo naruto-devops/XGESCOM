@@ -13,7 +13,7 @@ namespace Models
         public string Intitule { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
-
+        public bool Deleted { get; set; }
 
         public virtual IEnumerable<Client> Clients { get; set; }
     }

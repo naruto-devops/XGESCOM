@@ -10,8 +10,8 @@ using Models.Data;
 namespace Models.Migrations
 {
     [DbContext(typeof(XSoftContext))]
-    [Migration("20210204115305_migration-2")]
-    partial class migration2
+    [Migration("20210209141807_initialmigration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,10 @@ namespace Models.Migrations
 
                     b.Property<string>("Code")
                         .HasMaxLength(6);
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Description")
                         .HasMaxLength(200);
@@ -55,7 +59,11 @@ namespace Models.Migrations
                     b.Property<string>("Categorie")
                         .HasMaxLength(12);
 
-                    b.Property<int>("PrixTTC");
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("PrixTTC");
 
                     b.HasKey("ID");
 
@@ -106,9 +114,6 @@ namespace Models.Migrations
                     b.Property<string>("CodeRegion")
                         .HasMaxLength(25);
 
-                    b.Property<string>("Codification")
-                        .HasMaxLength(17);
-
                     b.Property<int?>("CollaborateurId");
 
                     b.Property<string>("Commentaire")
@@ -128,6 +133,10 @@ namespace Models.Migrations
 
                     b.Property<DateTime>("DateCreation");
 
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
                     b.Property<int>("Depot");
 
                     b.Property<int?>("DeviseId");
@@ -138,7 +147,7 @@ namespace Models.Migrations
                     b.Property<double>("Encours")
                         .HasMaxLength(24);
 
-                    b.Property<int>("Etranger");
+                    b.Property<bool>("Etranger");
 
                     b.Property<int?>("FamilleTierId");
 
@@ -162,6 +171,9 @@ namespace Models.Migrations
                         .HasMaxLength(25);
 
                     b.Property<int?>("ModalitePaiementId");
+
+                    b.Property<string>("Numero")
+                        .HasMaxLength(17);
 
                     b.Property<int>("NumeroBanqueTier");
 
@@ -189,7 +201,7 @@ namespace Models.Migrations
                     b.Property<string>("SiteWeb")
                         .HasMaxLength(69);
 
-                    b.Property<int>("Sommeil");
+                    b.Property<bool>("Sommeil");
 
                     b.Property<double>("TauxRemise")
                         .HasMaxLength(18);
@@ -200,8 +212,7 @@ namespace Models.Migrations
                     b.Property<string>("Telephone")
                         .HasMaxLength(21);
 
-                    b.Property<string>("Timbre")
-                        .HasMaxLength(21);
+                    b.Property<bool>("Timbre");
 
                     b.Property<int>("Type");
 
@@ -242,6 +253,10 @@ namespace Models.Migrations
                     b.Property<string>("CodePostal")
                         .HasMaxLength(9);
 
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
                     b.Property<string>("EMail")
                         .HasMaxLength(69);
 
@@ -265,10 +280,14 @@ namespace Models.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<int?>("UtilisateurId");
+
                     b.Property<string>("Ville")
                         .HasMaxLength(35);
 
                     b.HasKey("ID");
+
+                    b.HasIndex("UtilisateurId");
 
                     b.ToTable("Collaborateurs");
                 });
@@ -288,6 +307,10 @@ namespace Models.Migrations
 
                     b.Property<string>("CodePostal")
                         .HasMaxLength(10);
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Email")
                         .HasMaxLength(35);
@@ -343,6 +366,10 @@ namespace Models.Migrations
                     b.Property<string>("DEVISE")
                         .HasMaxLength(12);
 
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
                     b.Property<string>("LIBELLE")
                         .HasMaxLength(50);
 
@@ -370,7 +397,11 @@ namespace Models.Migrations
                     b.Property<string>("Code")
                         .HasMaxLength(19);
 
-                    b.Property<int>("Exonere");
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("Exonere");
 
                     b.Property<string>("Libelle")
                         .HasMaxLength(19);
@@ -387,6 +418,31 @@ namespace Models.Migrations
                     b.ToTable("FamilleTiers");
                 });
 
+            modelBuilder.Entity("Models.Models.Parametres", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("INCCLI")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("INCFRS")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("NUMCLI")
+                        .HasMaxLength(17);
+
+                    b.Property<string>("NUMFRS")
+                        .HasMaxLength(17);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Parametres");
+                });
+
             modelBuilder.Entity("Models.Models.Utilisateur", b =>
                 {
                     b.Property<int>("ID")
@@ -396,9 +452,11 @@ namespace Models.Migrations
                     b.Property<string>("C_ModePasse")
                         .HasMaxLength(12);
 
-                    b.Property<int?>("CollaborateurId");
-
                     b.Property<DateTime>("Date_connexion");
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Description")
                         .HasMaxLength(50);
@@ -412,8 +470,6 @@ namespace Models.Migrations
                         .HasMaxLength(12);
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CollaborateurId");
 
                     b.HasIndex("User")
                         .IsUnique()
@@ -454,6 +510,13 @@ namespace Models.Migrations
                         .HasForeignKey("ModalitePaiementId");
                 });
 
+            modelBuilder.Entity("Models.Models.Collaborateur", b =>
+                {
+                    b.HasOne("Models.Models.Utilisateur", "Utilisateur")
+                        .WithMany("Collaborateurs")
+                        .HasForeignKey("UtilisateurId");
+                });
+
             modelBuilder.Entity("Models.Models.Contact", b =>
                 {
                     b.HasOne("Models.Models.Client", "Client")
@@ -466,13 +529,6 @@ namespace Models.Migrations
                     b.HasOne("Models.Models.CategorieTarif", "CategorieTarif")
                         .WithMany("FamilleTiers")
                         .HasForeignKey("CategorieTarifId");
-                });
-
-            modelBuilder.Entity("Models.Models.Utilisateur", b =>
-                {
-                    b.HasOne("Models.Models.Collaborateur", "Collaborateur")
-                        .WithMany("Utilisateurs")
-                        .HasForeignKey("CollaborateurId");
                 });
 #pragma warning restore 612, 618
         }

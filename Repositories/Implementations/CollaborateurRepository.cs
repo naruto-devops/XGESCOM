@@ -26,14 +26,14 @@ namespace Repositories.Implementations
             try
             {
                 res = _context.Collaborateurs.ToList();
-                
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res = null;
+                throw ex;
             }
 
-            return res;
+           
         }
 
         public Collaborateur GetById(int id)
@@ -43,9 +43,9 @@ namespace Repositories.Implementations
                 var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
                 return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                 throw ex;
             }
         }
 
@@ -55,13 +55,14 @@ namespace Repositories.Implementations
             {
                 _context.Collaborateurs.Add(collaborateur);
                 _context.SaveChanges();
+                return collaborateur;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                 throw ex;
             }
-            return collaborateur;
+           
         }
 
         public bool Delete(int id)
@@ -70,22 +71,24 @@ namespace Repositories.Implementations
             try
             {
                 var res = _context.Collaborateurs.FirstOrDefault(r => r.ID.Equals(id));
+                res.Deleted = true;
                 if (res != null)
                 {
-                    _context.Collaborateurs.Remove(res);
+                    _context.Collaborateurs.Update(res);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                     return false;
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+               throw ex;
 
             }
-            return true;
+            
         }
 
         public Collaborateur Update(Collaborateur collaborateur)
@@ -95,14 +98,48 @@ namespace Repositories.Implementations
             {
                 _context.Update(collaborateur);
                 _context.SaveChanges();
+                return collaborateur;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
 
             }
-            return collaborateur;
+        }
+
+        public Client GetByClient(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var client = _context.Clients.FirstOrDefault(r => r.CollaborateurId.Equals(id));
+                    return client;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public Collaborateur GetUserByCollaborator(int id)
+        {
+            try
+            {
+                using (var db = new XSoftContext())
+                {
+                    var collaborateur = _context.Collaborateurs.FirstOrDefault(r => r.UtilisateurId.Equals(id));
+                    return collaborateur;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

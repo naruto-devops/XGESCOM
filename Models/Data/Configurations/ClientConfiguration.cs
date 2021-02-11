@@ -12,7 +12,7 @@ namespace Models.Data.Configurations
         public void Configure(EntityTypeBuilder<Client> builder)
         {
 
-            builder.Property(s => s.Codification).HasMaxLength(17);
+            builder.Property(s => s.Numero).HasMaxLength(17);
             builder.Property(s => s.Intitule).HasMaxLength(35);
             builder.Property(s => s.NumeroPrincipale).HasMaxLength(13);
             builder.Property(s => s.ContactPrincipale).HasMaxLength(35);
@@ -31,7 +31,7 @@ namespace Models.Data.Configurations
             builder.Property(s => s.Telecopie).HasMaxLength(21);
             builder.Property(s => s.EMail).HasMaxLength(69);
             builder.Property(s => s.SiteWeb).HasMaxLength(69);
-            builder.Property(s => s.Timbre).HasMaxLength(21);
+           
             builder.Property(s => s.TauxRemise).HasMaxLength(18);
             builder.Property(s => s.CategorieTVA).HasMaxLength(7);
             builder.Property(s => s.Categorie).HasMaxLength(7);
@@ -49,12 +49,13 @@ namespace Models.Data.Configurations
             builder.Property(s => s.CompteAuxiliaire).HasMaxLength(20);
             builder.Property(s => s.ICE).HasMaxLength(20);
 
+            builder.Property(s => s.Deleted).HasDefaultValue(false);
 
 
             //builder.Property(s => s.CodePostal).HasMaxLength(5);
             //builder.HasIndex(e => e.CodeRegion)
             // .HasName("UnicityCodeRegion").IsUnique();
-            
+
             //--Linkcategorietarif
 
             builder.HasOne(d => d.CategorieTarif)
