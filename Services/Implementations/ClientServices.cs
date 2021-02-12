@@ -12,13 +12,13 @@ namespace Services
     {
 
         IClientRepository _ClientRepository;
-
+        IContactRepository _contactRepository;
         IParametresService _parametresService;
-        public ClientServices(IClientRepository client, IParametresService parametres)
+        public ClientServices(IClientRepository client, IParametresService parametres, IContactRepository contact )
       
         {   _ClientRepository = client;
-
             _parametresService = parametres;
+            _contactRepository = contact;
         }
 
      
@@ -29,11 +29,19 @@ namespace Services
             result = _ClientRepository.GetAll();
             return result;
         }
+
+
         public Client GetById(int id)
         {
             return _ClientRepository.GetById(id);
         }
 
+        public List<Contact> GetcontactByClient(int clientId)
+        {
+            List<Contact> result = new List<Contact>();
+            result = _contactRepository.GetByClient(clientId);
+            return result;
+        }
 
         public Client Add(Client client)
         {
@@ -92,6 +100,8 @@ namespace Services
         {
             return _ClientRepository.CheckUnicCodification(numero);
         }
+
+        
         //public bool CheckClient_ExistDocLig( int id)
         //{
         //    var result = _ClientRepository.GetByDocLig(id);

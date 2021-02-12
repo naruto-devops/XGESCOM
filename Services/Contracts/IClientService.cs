@@ -9,11 +9,13 @@ namespace Services.Contracts
     {
         List<Client> GetAll();
         Client GetById(int id);
+        List<Contact> GetcontactByClient(int clientId);
         Client Add(Client client);
         Client Update( Client client);
         bool CheckUnicCodification(string numero);
-        //bool CheckClient_ExistDocLig(int id);
         bool Delete(int id);
+        //bool CheckClient_ExistDocLig(int id);
+
         //FamilleTier GetfamTier(int id); 
     }
 }

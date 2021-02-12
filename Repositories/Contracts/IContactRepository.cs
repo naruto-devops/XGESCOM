@@ -10,7 +10,7 @@ namespace Repositories.Contracts
         
             List<Contact> GetAll();
             Contact GetById(int id);
-          
+            List<Contact> GetByClient(int clientID);
             Contact Add(Contact contact);
             Contact Update(Contact contact);
             bool Delete(int id);

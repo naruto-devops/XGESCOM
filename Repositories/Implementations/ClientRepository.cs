@@ -50,6 +50,21 @@ namespace Repositories.Implementations
             }
         }
 
+
+        public List<Contact> GetByClient(int ClientId)
+        {
+            var res = new List<Contact>();
+            try
+            {
+                res = _context.Contacts.Where(r => r.ClienttId.Equals(ClientId)).ToList();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Client Add(Client Client)
         {
             try
