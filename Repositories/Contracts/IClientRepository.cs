@@ -9,6 +9,7 @@ namespace Repositories.Contracts
     {
         List<Client> GetAll();
         Client GetById(int id);
+        List<Contact> GetByClient(int ClientId);
         Client Add(Client client);
         Client Update(Client client);
         bool CheckUnicCodification(string numero);

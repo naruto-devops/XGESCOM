@@ -50,6 +50,8 @@ namespace Repositories.Implementations
             }
         }
 
+        
+
         public Contact Add(Contact contact)
         {
             try

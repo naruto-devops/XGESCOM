@@ -25,6 +25,8 @@ namespace XSOFT_WEB.Controllers
             return _ContactService.GetAll();
 
         }
+       
+
         [HttpGet("Find/{id}")]
         public Contact GetById(int id)
         {

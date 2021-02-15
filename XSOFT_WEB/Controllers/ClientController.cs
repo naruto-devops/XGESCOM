@@ -18,9 +18,6 @@ namespace XSOFT_WEB.Controllers
     {
         IClientService _clientService;
      
-       
-
-
         public ClientController(IClientService client)
         {
             _clientService = client;
@@ -29,12 +26,16 @@ namespace XSOFT_WEB.Controllers
         [HttpGet("Get")]
         public List<Client> GetAll()
         {
-         
+          return _clientService.GetAll();
+        }
 
-
-
+        [HttpGet("GetContacts")]
+        public List<Client> GetContacts()
+        {
             return _clientService.GetAll();
         }
+
+
         [HttpGet("Find/{id}")]
         public Client GetById(int id)
         {
