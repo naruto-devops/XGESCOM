@@ -1,2 +1,2 @@
 # XGESCOM
-test automated build .
+test automated buil2jd .
