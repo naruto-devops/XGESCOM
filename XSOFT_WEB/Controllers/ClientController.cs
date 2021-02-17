@@ -81,5 +81,12 @@ namespace XSOFT_WEB.Controllers
 
         }
 
+
+        [HttpGet("CheckExistNumeroClient")]
+        public bool CheckExistNumeroClient(string numero)
+        {
+            return CheckUnicCodification( numero);
+        }
+
     }
 }
